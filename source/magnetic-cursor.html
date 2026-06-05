@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>磁力光标效果</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #f5f5f5;
+            cursor: none;
+        }
+
+        .cursor {
+            width: var(--size);
+            height: var(--size);
+            border-radius: 50%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.15s ease;
+        }
+
+        .cursor--large {
+            --size: 40px;
+            border: 1px solid #333;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .cursor--small {
+            --size: 10px;
+            background: #333;
+            transform: translate(-50%, -50%);
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px;
+            max-width: 800px;
+        }
+
+        .button {
+            --size: 120px;
+            border: none;
+            min-width: var(--size);
+            min-height: var(--size);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            background: #fff;
+            color: #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            cursor: none;
+            font-family: Arial, sans-serif;
+        }
+
+        .button:hover {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>磁力光标效果演示</h1>
+    
+    <div class="container">
+        <button class="button">按钮 1</button>
+        <button class="button">按钮 2</button>
+        <button class="button">按钮 3</button>
+        <button class="button">按钮 4</button>
+        <button class="button">按钮 5</button>
+        <button class="button">按钮 6</button>
+    </div>
+
+    <div class="cursor cursor--large"></div>
+    <div class="cursor cursor--small"></div>
+
+    <script>
+        const cursorOuter = document.querySelector(".cursor--large");
+        const cursorInner = document.querySelector(".cursor--small");
+        let isStuck = false;
+        let mouse = {
+            x: -100,
+            y: -100,
+        };
+
+        // 处理滚动
+        let scrollHeight = 0;
+        window.addEventListener('scroll', function(e) {
+            scrollHeight = window.scrollY
+        });
+
+        let cursorOuterOriginalState = {
+            width: cursorOuter.getBoundingClientRect().width,
+            height: cursorOuter.getBoundingClientRect().height,
+        };
+
+        const buttons = document.querySelectorAll(".button");
+
+        buttons.forEach((button) => {
+            button.addEventListener("pointerenter", handleMouseEnter);
+            button.addEventListener("pointerleave", handleMouseLeave);
+        });
+
+        document.body.addEventListener("pointermove", updateCursorPosition);
+        document.body.addEventListener("pointerdown", () => {
+            cursorInner.style.transform = "translate(-50%, -50%) scale(2)";
+        });
+        document.body.addEventListener("pointerup", () => {
+            cursorInner.style.transform = "translate(-50%, -50%) scale(1)";
+        });
+
+        function updateCursorPosition(e) {
+            mouse.x = e.pageX;
+            mouse.y = e.pageY;
+        }
+
+        function updateCursor() {
+            cursorInner.style.left = mouse.x + 'px';
+            cursorInner.style.top = mouse.y + 'px';
+
+            if (!isStuck) {
+                cursorOuter.style.left = (mouse.x - cursorOuterOriginalState.width/2) + 'px';
+                cursorOuter.style.top = (mouse.y - cursorOuterOriginalState.height/2) + 'px';
+            }
+
+            requestAnimationFrame(updateCursor);
+        }
+
+        updateCursor();
+
+        function handleMouseEnter(e) {
+            isStuck = true;
+            const targetBox = e.currentTarget.getBoundingClientRect();
+            cursorOuter.style.left = targetBox.left + 'px';
+            cursorOuter.style.top = (targetBox.top + scrollHeight) + 'px';
+            cursorOuter.style.width = targetBox.width + 'px';
+            cursorOuter.style.height = targetBox.height + 'px';
+            cursorOuter.style.borderRadius = '8px';
+            cursorOuter.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+        }
+
+        function handleMouseLeave(e) {
+            isStuck = false;
+            cursorOuter.style.width = cursorOuterOriginalState.width + 'px';
+            cursorOuter.style.height = cursorOuterOriginalState.height + 'px';
+            cursorOuter.style.borderRadius = '50%';
+            cursorOuter.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+        }
+    </script>
+</body>
+
+</html>
