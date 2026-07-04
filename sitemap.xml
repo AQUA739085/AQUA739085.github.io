@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://aqua739085.github.io/2026/07/04/QQ%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B-OpenClaw-NapCat/</loc>
+    
+    <lastmod>2026-07-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://aqua739085.github.io/2026/05/24/%E4%B8%A4%E4%B8%AA%E5%B0%8F%E6%B5%8B%E8%AF%95%E7%BD%91%E5%9D%80/</loc>
     
     <lastmod>2026-06-05</lastmod>
@@ -58,26 +67,61 @@
 
   <url>
     <loc>https://aqua739085.github.io/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
+    <loc>https://aqua739085.github.io/tags/QQ%E6%9C%BA%E5%99%A8%E4%BA%BA/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://aqua739085.github.io/tags/OpenClaw/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://aqua739085.github.io/tags/NapCat/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://aqua739085.github.io/tags/%E6%95%99%E7%A8%8B/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://aqua739085.github.io/tags/%E6%97%A5%E8%AE%B0/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://aqua739085.github.io/tags/%E6%B5%8B%E8%AF%95/</loc>
-    <lastmod>2026-06-05</lastmod>
+    <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
 
+  
+  <url>
+    <loc>https://aqua739085.github.io/categories/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
 </urlset>

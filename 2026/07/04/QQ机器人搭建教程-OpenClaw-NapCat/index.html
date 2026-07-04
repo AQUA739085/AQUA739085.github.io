@@ -1,0 +1,875 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>QQ机器人搭建教程_OpenClaw_NapCat | 739085</title><meta name="author" content="739085"><meta name="copyright" content="739085"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="从零搭建自己的 QQ AI 机器人 — OpenClaw + NapCat 教程 作者：739085最后更新：2026-06-02适用平台：Windows 10&#x2F;11难度：⭐⭐⭐（需要基本的命令行操作能力）   前言想有一个自己专属的、有性格的 QQ 机器人吗？不需要写复杂的代码，不需要租服务器，在自己电脑上就能跑。 这篇教程带你一步步搭建基于 OpenClaw + NapCat + D">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QQ机器人搭建教程_OpenClaw_NapCat">
+<meta property="og:url" content="https://aqua739085.github.io/2026/07/04/QQ%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B-OpenClaw-NapCat/index.html">
+<meta property="og:site_name" content="739085">
+<meta property="og:description" content="从零搭建自己的 QQ AI 机器人 — OpenClaw + NapCat 教程 作者：739085最后更新：2026-06-02适用平台：Windows 10&#x2F;11难度：⭐⭐⭐（需要基本的命令行操作能力）   前言想有一个自己专属的、有性格的 QQ 机器人吗？不需要写复杂的代码，不需要租服务器，在自己电脑上就能跑。 这篇教程带你一步步搭建基于 OpenClaw + NapCat + D">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img.cdn1.vip/i/69db8854d2ef4_1775994964.webp">
+<meta property="article:published_time" content="2026-07-04T04:28:48.000Z">
+<meta property="article:modified_time" content="2026-07-04T04:33:30.252Z">
+<meta property="article:author" content="739085">
+<meta property="article:tag" content="NapCat">
+<meta property="article:tag" content="OpenClaw">
+<meta property="article:tag" content="QQ机器人">
+<meta property="article:tag" content="教程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img.cdn1.vip/i/69db8854d2ef4_1775994964.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "QQ机器人搭建教程_OpenClaw_NapCat",
+  "url": "https://aqua739085.github.io/2026/07/04/QQ%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B-OpenClaw-NapCat/",
+  "image": "https://img.cdn1.vip/i/69db8854d2ef4_1775994964.webp",
+  "datePublished": "2026-07-04T04:28:48.000Z",
+  "dateModified": "2026-07-04T04:33:30.252Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "739085",
+      "url": "https://AQUA739085.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="https://img.cdn1.vip/i/69db8854d2ef4_1775994964.webp"><link rel="canonical" href="https://aqua739085.github.io/2026/07/04/QQ%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B-OpenClaw-NapCat/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="google-site-verification" content="c6b1a7a157c24e23"/><link rel="stylesheet" href="/css/index.css?v=5.5.5-b1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'QQ机器人搭建教程_OpenClaw_NapCat',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><style>html {
+  cursor: none;
+}
+
+.cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.cursor--large {
+  width: 50px;
+  height: 50px;
+  border: none;
+  background: 
+    linear-gradient(var(--cursor-color), var(--cursor-color)) top left / 15px 3px,
+    linear-gradient(var(--cursor-color), var(--cursor-color)) top left / 3px 15px,
+    linear-gradient(var(--cursor-color), var(--cursor-color)) top right / 15px 3px,
+    linear-gradient(var(--cursor-color), var(--cursor-color)) top right / 3px 15px,
+    linear-gradient(var(--cursor-color), var(--cursor-color)) bottom left / 15px 3px,
+    linear-gradient(var(--cursor-color), var(--cursor-color)) bottom left / 3px 15px,
+    linear-gradient(var(--cursor-color), var(--cursor-color)) bottom right / 15px 3px,
+    linear-gradient(var(--cursor-color), var(--cursor-color)) bottom right / 3px 15px;
+  background-repeat: no-repeat;
+}
+
+.cursor--small {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .cursor--large {
+    --cursor-color: #fff;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .cursor--large {
+    --cursor-color: #333;
+  }
+}</style><meta name="generator" content="Hexo 8.1.1"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(https://img.cdn1.vip/i/69db87c25db3d_1775994818.webp);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="https://img.cdn1.vip/i/69db8854d2ef4_1775994964.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/ loading='lazy'></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://img.cdn1.vip/i/69db87c25db3d_1775994818.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="https://img.cdn1.vip/i/69db8854d2ef4_1775994964.webp" alt="Logo" loading='lazy'><span class="site-name">739085</span></a><a class="nav-page-title" href="/"><span class="site-name">QQ机器人搭建教程_OpenClaw_NapCat</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">QQ机器人搭建教程_OpenClaw_NapCat</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-07-04T04:28:48.000Z" title="发表于 2026-07-04 12:28:48">2026-07-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-07-04T04:33:30.252Z" title="更新于 2026-07-04 12:33:30">2026-07-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%98%E8%85%BE%E8%AE%B0%E5%BD%95/">折腾记录</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span class="waline-pageview-count" data-path="/2026/07/04/QQ%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B-OpenClaw-NapCat/"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2026/07/04/QQ%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B-OpenClaw-NapCat/#post-comment"><span class="waline-comment-count" data-path="/2026/07/04/QQ%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B-OpenClaw-NapCat/"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="从零搭建自己的-QQ-AI-机器人-—-OpenClaw-NapCat-教程"><a href="#从零搭建自己的-QQ-AI-机器人-—-OpenClaw-NapCat-教程" class="headerlink" title="从零搭建自己的 QQ AI 机器人 — OpenClaw + NapCat 教程"></a>从零搭建自己的 QQ AI 机器人 — OpenClaw + NapCat 教程</h1><blockquote>
+<p>作者：739085<br>最后更新：2026-06-02<br>适用平台：Windows 10&#x2F;11<br>难度：⭐⭐⭐（需要基本的命令行操作能力）</p>
+</blockquote>
+<hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想有一个自己专属的、有性格的 QQ 机器人吗？不需要写复杂的代码，不需要租服务器，在自己电脑上就能跑。</p>
+<p>这篇教程带你一步步搭建基于 <strong>OpenClaw</strong> + <strong>NapCat</strong> + <strong>DeepSeek</strong> 的 QQ AI 机器人，最终效果：你的 QQ 号可以自动回复私聊和群聊消息，而且还能有自己的”人格”。</p>
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#1-%E6%9E%B6%E6%9E%84%E6%A6%82%E8%BF%B0">架构概述</a></li>
+<li><a href="#2-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87">环境准备</a></li>
+<li><a href="#3-%E5%AE%89%E8%A3%85-openclaw">安装 OpenClaw</a></li>
+<li><a href="#4-%E5%AE%89%E8%A3%85-napcat-%E6%8F%92%E4%BB%B6">安装 NapCat 插件</a></li>
+<li><a href="#5-%E9%85%8D%E7%BD%AE-ai-%E6%A8%A1%E5%9E%8B">配置 AI 模型</a></li>
+<li><a href="#6-%E9%85%8D%E7%BD%AE-qq-%E9%A2%91%E9%81%93">配置 QQ 频道</a></li>
+<li><a href="#7-toolsprofile-%E9%85%8D%E7%BD%AE%E9%81%BF%E5%9D%91%E5%BF%85%E5%81%9A">tools.profile 配置（避坑必做）</a></li>
+<li><a href="#8-%E8%AE%BE%E5%AE%9A%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BA%BA%E6%A0%BC">设定机器人人格</a></li>
+<li><a href="#9-%E5%90%AF%E5%8A%A8%E4%B8%8E%E6%B5%8B%E8%AF%95">启动与测试</a></li>
+<li><a href="#10-%E8%AE%A9-ai-%E5%B8%AE%E4%BD%A0%E7%AE%A1%E7%90%86-qq">让 AI 帮你管理 QQ</a></li>
+<li><a href="#11-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5">常见问题排查</a></li>
+<li><a href="#12-%E8%BF%9B%E9%98%B6%E9%85%8D%E7%BD%AE">进阶配置</a></li>
+<li><a href="#13-%E4%BB%8E%E6%97%A7%E6%9E%B6%E6%9E%84%E8%BF%81%E7%A7%BB-izhimuqq--hyl_aanapcat">从旧架构迁移</a></li>
+<li><a href="#14-%E5%AE%89%E5%85%A8%E4%B8%8E%E9%A3%8E%E6%8E%A7%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">安全与风控注意事项</a></li>
+<li><a href="#15-%E6%87%92%E4%BA%BA%E9%80%9A%E9%81%93%E8%AE%A9-ai-%E5%B8%AE%E4%BD%A0%E6%90%AD%E7%AC%91">懒人通道：让 AI 帮你搭（笑）</a></li>
+</ol>
+<hr>
+<h2 id="1-架构概述"><a href="#1-架构概述" class="headerlink" title="1. 架构概述"></a>1. 架构概述</h2><p>先搞清楚几个东西分别是什么：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────────────────┐</span><br><span class="line">│                     你的电脑                      │</span><br><span class="line">│                                                  │</span><br><span class="line">│  QQNT (你日常用的QQ)                               │</span><br><span class="line">│    │                                             │</span><br><span class="line">│    └── NapCat (QQ 协议插件)                       │</span><br><span class="line">│           │  HTTP API (127.0.0.1:3000)           │</span><br><span class="line">│           │  ── OpenClaw 主动发消息用              │</span><br><span class="line">│           │  WebSocket (127.0.0.1:18800)         │</span><br><span class="line">│           │  ── QQ 消息推送给 OpenClaw            │</span><br><span class="line">│           ▼                                      │</span><br><span class="line">│  OpenClaw Gateway (核心引擎)                       │</span><br><span class="line">│    ├── @hyl_aa/napcat (OneBot 11 适配插件)        │</span><br><span class="line">│    ├── deepseek 插件 (连接 AI)                     │</span><br><span class="line">│    ├── 45 个 qq_* 工具 (禁言/踢人/发公告...)       │</span><br><span class="line">│    └── SOUL.md (人格设定)                          │</span><br><span class="line">│           │                                      │</span><br><span class="line">│           ▼                                      │</span><br><span class="line">│  DeepSeek API (云端 AI 大脑)                       │</span><br><span class="line">│     api.deepseek.com                             │</span><br><span class="line">└──────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>简单来说：</p>
+<ul>
+<li><strong>NapCat</strong>：一个 QQ 协议插件，通过 OneBot 11 标准接口暴露 QQ 操作能力。安装在 QQNT 上后，可以通过 HTTP + WebSocket 收发 QQ 消息</li>
+<li><strong>OpenClaw</strong>：AI 机器人框架，核心引擎，负责连接 NapCat 和 AI 模型，内置 45 个 QQ 相关 AI 工具（禁言、踢人、发公告等）</li>
+<li><strong>@hyl_aa&#x2F;napcat</strong>：OpenClaw 官方适配插件，实现 OneBot 11 协议对接，让 AI 能操控 QQ</li>
+<li><strong>DeepSeek</strong>：云端大模型，提供对话能力（也可以用其他模型）</li>
+</ul>
+<blockquote>
+<p><strong>核心依赖版本要求</strong>：OpenClaw &gt;&#x3D; 2026.3.14、Node.js &gt;&#x3D; 22、NapCat 最新版本</p>
+</blockquote>
+<hr>
+<h2 id="2-环境准备"><a href="#2-环境准备" class="headerlink" title="2. 环境准备"></a>2. 环境准备</h2><h3 id="2-1-你需要的东西"><a href="#2-1-你需要的东西" class="headerlink" title="2.1 你需要的东西"></a>2.1 你需要的东西</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Windows 10&#x2F;11</td>
+<td>操作系统</td>
+</tr>
+<tr>
+<td>Node.js 22.x</td>
+<td>运行环境</td>
+</tr>
+<tr>
+<td>一个 QQ 号</td>
+<td>机器人用（建议用小号）</td>
+</tr>
+<tr>
+<td>DeepSeek API Key</td>
+<td>在 <a target="_blank" rel="noopener" href="https://platform.deepseek.com/">platform.deepseek.com</a> 注册获取</td>
+</tr>
+<tr>
+<td>网络</td>
+<td>能访问 api.deepseek.com</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-安装-Node-js"><a href="#2-2-安装-Node-js" class="headerlink" title="2.2 安装 Node.js"></a>2.2 安装 Node.js</h3><p>去 <a target="_blank" rel="noopener" href="https://nodejs.org/">Node.js 官网</a> 下载 LTS 版本（22.x），安装时一路默认选项即可。</p>
+<p>安装完成后，打开 PowerShell 验证：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">node <span class="literal">--version</span></span><br><span class="line"><span class="comment"># 应该输出 v22.x.x</span></span><br><span class="line"></span><br><span class="line">npm <span class="literal">--version</span></span><br><span class="line"><span class="comment"># 应该输出 10.x.x</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-安装-OpenClaw"><a href="#3-安装-OpenClaw" class="headerlink" title="3. 安装 OpenClaw"></a>3. 安装 OpenClaw</h2><p>OpenClaw 是一个命令行工具，通过 npm 全局安装。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install <span class="literal">-g</span> openclaw</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后验证：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openclaw <span class="literal">--version</span></span><br><span class="line"><span class="comment"># 输出类似 2026.x.x</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-初始化"><a href="#3-1-初始化" class="headerlink" title="3.1 初始化"></a>3.1 初始化</h3><p>安装后运行一次初始化（可选，但如果后续遇到问题可以先跑这个）：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw doctor</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-安装-NapCat-插件"><a href="#4-安装-NapCat-插件" class="headerlink" title="4. 安装 NapCat 插件"></a>4. 安装 NapCat 插件</h2><h3 id="4-1-部署-NapCat"><a href="#4-1-部署-NapCat" class="headerlink" title="4.1 部署 NapCat"></a>4.1 部署 NapCat</h3><ol>
+<li>前往 <a target="_blank" rel="noopener" href="https://github.com/NapNeko/NapCatQQ">NapCat 官方仓库</a>，下载对应 QQ 客户端版本的 release 安装包，按官方文档完成安装</li>
+<li><strong>核心要求</strong>：QQ 账号必须成功登录，机器人保持在线状态</li>
+<li><strong>注意</strong>：NapCat 的登录方式因版本而异，部分版本需要手动扫码，<strong>请以官方最新文档为准，不要参照旧版教程！</strong></li>
+</ol>
+<h3 id="4-2-配置-NapCat-通信通道"><a href="#4-2-配置-NapCat-通信通道" class="headerlink" title="4.2 配置 NapCat 通信通道"></a>4.2 配置 NapCat 通信通道</h3><p>NapCat 启动后需要开启 <strong>两个通信通道</strong>，修改配置后需重启 NapCat 生效：</p>
+<h4 id="①-HTTP-API-通道（OpenClaw-主动发消息用，默认端口-3000）"><a href="#①-HTTP-API-通道（OpenClaw-主动发消息用，默认端口-3000）" class="headerlink" title="① HTTP API 通道（OpenClaw 主动发消息用，默认端口 3000）"></a>① HTTP API 通道（OpenClaw 主动发消息用，默认端口 3000）</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;httpApi&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">3000</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="②-反向-WebSocket-通道（QQ-消息推送给-OpenClaw，默认端口-18800）"><a href="#②-反向-WebSocket-通道（QQ-消息推送给-OpenClaw，默认端口-18800）" class="headerlink" title="② 反向 WebSocket 通道（QQ 消息推送给 OpenClaw，默认端口 18800）"></a>② 反向 WebSocket 通道（QQ 消息推送给 OpenClaw，默认端口 18800）</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;reverseWs&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;urls&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;ws://127.0.0.1:18800&quot;</span><span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>重要</strong>：两个通道缺一不可！HTTP API 负责让 OpenClaw 发消息，WebSocket 负责把 QQ 消息推送给 OpenClaw。端口 18800 是 OpenClaw 分配给 napcat channel 的默认 WS 端口。</p>
+</blockquote>
+<h3 id="4-3-在-OpenClaw-中安装-napcat-插件"><a href="#4-3-在-OpenClaw-中安装-napcat-插件" class="headerlink" title="4.3 在 OpenClaw 中安装 napcat 插件"></a>4.3 在 OpenClaw 中安装 napcat 插件</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw plugins install @hyl_aa/napcat</span><br></pre></td></tr></table></figure>
+
+<p>这会自动把 napcat 插件安装到 <code>~/.openclaw/npm/node_modules/@hyl_aa/napcat</code>。</p>
+<blockquote>
+<p><strong>插件开源仓库</strong>：<a target="_blank" rel="noopener" href="https://github.com/Aliang1337/openclaw-napcat">github.com&#x2F;Aliang1337&#x2F;openclaw-napcat</a>，遇到问题可以去看源码。</p>
+</blockquote>
+<h3 id="4-4-配置-NapCat（QQ-端）"><a href="#4-4-配置-NapCat（QQ-端）" class="headerlink" title="4.4 配置 NapCat（QQ 端）"></a>4.4 配置 NapCat（QQ 端）</h3><p>NapCat 需要 QQNT 来运行。目前 NapCat 支持作为 QQNT 的插件运行。</p>
+<ol>
+<li>确保你的 QQNT 是较新版本（9.9.x+）</li>
+<li>从 NapCat 官方获取 QQNT 插件加载器</li>
+<li>按照上面 4.2 节的配置，确保 HTTP API（端口 3000）和反向 WebSocket（端口 18800）都已开启</li>
+</ol>
+<blockquote>
+<p><strong>关键配置</strong>：NapCat 的 HTTP API 默认监听 <code>127.0.0.1:3000</code>，OpenClaw 会通过这个地址和 NapCat 通信。WebSocket 默认监听 <code>127.0.0.1:18800</code>，这是 OpenClaw 接收 QQ 消息的通道。</p>
+</blockquote>
+<hr>
+<h2 id="5-配置-AI-模型"><a href="#5-配置-AI-模型" class="headerlink" title="5. 配置 AI 模型"></a>5. 配置 AI 模型</h2><p>OpenClaw 通过 <code>openclaw.json</code> 来配置一切。这个文件位于 <code>C:\Users\你的用户名\.openclaw\openclaw.json</code>。</p>
+<h3 id="5-1-获取-DeepSeek-API-Key"><a href="#5-1-获取-DeepSeek-API-Key" class="headerlink" title="5.1 获取 DeepSeek API Key"></a>5.1 获取 DeepSeek API Key</h3><ol>
+<li>访问 <a target="_blank" rel="noopener" href="https://platform.deepseek.com/">platform.deepseek.com</a></li>
+<li>注册&#x2F;登录</li>
+<li>在 API Keys 页面创建一个新的 API Key</li>
+<li>复制保存（只显示一次！）</li>
+</ol>
+<blockquote>
+<p>DeepSeek 的 API 非常便宜，日常使用一个月几块钱就够了。</p>
+</blockquote>
+<h3 id="5-2-配置模型"><a href="#5-2-配置模型" class="headerlink" title="5.2 配置模型"></a>5.2 配置模型</h3><p>在 <code>openclaw.json</code> 中配置 DeepSeek：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;agents&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;defaults&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;model&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;primary&quot;</span><span class="punctuation">:</span> <span class="string">&quot;deepseek/deepseek-v4-pro&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;plugins&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;allow&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;deepseek&quot;</span><span class="punctuation">,</span> <span class="string">&quot;memory-core&quot;</span><span class="punctuation">,</span> <span class="string">&quot;napcat&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;entries&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;deepseek&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;napcat&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span> <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;models&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;providers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;deepseek&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;baseUrl&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://api.deepseek.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;apiKey&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的DeepSeek API Key&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;api&quot;</span><span class="punctuation">:</span> <span class="string">&quot;openai-completions&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;models&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">          <span class="punctuation">&#123;</span> <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;deepseek-v4-pro&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;DeepSeek V4 Pro&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line">        <span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>模型选择建议</strong>：</p>
+<ul>
+<li><code>deepseek-v4-pro</code>：效果最好，适合日常聊天</li>
+<li><code>deepseek-v4-flash</code>：速度更快，适合需要快速响应的场景</li>
+<li>也可以用 Ollama 跑本地模型（deepseek-r1:8b、qwen2.5-coder:7b），省 API 费用但需要好显卡</li>
+</ul>
+</blockquote>
+<h3 id="5-3-openclaw-json-完整结构参考"><a href="#5-3-openclaw-json-完整结构参考" class="headerlink" title="5.3 openclaw.json 完整结构参考"></a>5.3 openclaw.json 完整结构参考</h3><p>以下是 <code>openclaw.json</code> 的完整结构树，帮助你理解各个配置块的作用。<strong>注意</strong>：这个文件是手动编写的，不要直接复制整个文件，按需填入你自己的值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">openclaw.json</span><br><span class="line">├── env                          # 环境变量（可被所有插件读取）</span><br><span class="line">│   └── DEEPSEEK_API_KEY        # DeepSeek API Key（可选，也可写在 models 里）</span><br><span class="line">├── agents</span><br><span class="line">│   └── defaults.model.primary  # 默认 AI 模型，如 &quot;deepseek/deepseek-v4-pro&quot;</span><br><span class="line">├── plugins                     # 插件管理</span><br><span class="line">│   ├── allow: [...]            # 白名单：只加载这些插件（必填！）</span><br><span class="line">│   ├── entries.&#123;id&#125;.enabled    # 单独控制每个插件的开关</span><br><span class="line">│   └── bundledDiscovery        # &quot;allowlist&quot;（只加载白名单中的插件）</span><br><span class="line">├── models.providers            # AI 模型提供商配置</span><br><span class="line">│   └── deepseek                # DeepSeek 的 baseUrl / apiKey / models[]</span><br><span class="line">├── channels                    # 通信渠道配置</span><br><span class="line">│   └── napcat                  # NapCat QQ 渠道</span><br><span class="line">│       ├── httpApi             # NapCat HTTP API 地址</span><br><span class="line">│       ├── accessToken         # NapCat 鉴权 token</span><br><span class="line">│       ├── selfId              # 机器人 QQ 号</span><br><span class="line">│       ├── enabled             # 是否启用</span><br><span class="line">│       ├── dmPolicy            # 私聊策略</span><br><span class="line">│       ├── groupPolicy         # 群聊策略</span><br><span class="line">│       ├── allowFrom           # 私聊白名单</span><br><span class="line">│       ├── groupAllowFrom      # 群聊白名单</span><br><span class="line">│       └── systemPrompt        # 机器人人格设定（可选）</span><br><span class="line">├── tools</span><br><span class="line">│   └── profile                 # &quot;full&quot;（必须！否则 qq_* 工具不可用）</span><br><span class="line">├── gateway                     # Gateway 运行配置</span><br><span class="line">│   ├── mode                    # &quot;local&quot;</span><br><span class="line">│   └── auth.mode / auth.token  # 本地鉴权</span><br><span class="line">├── messages.groupChat</span><br><span class="line">│   └── visibleReplies          # &quot;automatic&quot;（群聊回复可见性）</span><br><span class="line">├── skills.entries              # 各种 skill 开关（一般全关）</span><br><span class="line">└── wizard                      # 自动生成，记录上次运行信息</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <strong>关键提示</strong>：<code>plugins.allow</code> 必须包含 <code>&quot;deepseek&quot;</code>、<code>&quot;memory-core&quot;</code>、<code>&quot;napcat&quot;</code>，缺少任何一个都会导致对应功能失效。</p>
+</blockquote>
+<hr>
+<h2 id="6-配置-QQ-频道"><a href="#6-配置-QQ-频道" class="headerlink" title="6. 配置 QQ 频道"></a>6. 配置 QQ 频道</h2><h3 id="6-1-NapCat-连接信息"><a href="#6-1-NapCat-连接信息" class="headerlink" title="6.1 NapCat 连接信息"></a>6.1 NapCat 连接信息</h3><p>在 <code>openclaw.json</code> 的 <code>channels</code> 部分配置：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;channels&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;napcat&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;httpApi&quot;</span><span class="punctuation">:</span> <span class="string">&quot;http://127.0.0.1:3000&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;accessToken&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的NapCat Access Token&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;selfId&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的QQ号&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;dmPolicy&quot;</span><span class="punctuation">:</span> <span class="string">&quot;open&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;allowFrom&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;*&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;groupPolicy&quot;</span><span class="punctuation">:</span> <span class="string">&quot;open&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;groupAllowFrom&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;允许的群号&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>配置说明</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>httpApi</code></td>
+<td>NapCat 的 HTTP API 地址，默认 <code>http://127.0.0.1:3000</code></td>
+</tr>
+<tr>
+<td><code>accessToken</code></td>
+<td>NapCat 的访问令牌，在 NapCat 设置里找</td>
+</tr>
+<tr>
+<td><code>selfId</code></td>
+<td>你用来当机器人的 QQ 号</td>
+</tr>
+<tr>
+<td><code>dmPolicy</code></td>
+<td>私聊策略，<code>&quot;open&quot;</code> 表示接受所有私聊</td>
+</tr>
+<tr>
+<td><code>groupPolicy</code></td>
+<td>群聊策略，<code>&quot;open&quot;</code> 表示允许群聊</td>
+</tr>
+<tr>
+<td><code>groupAllowFrom</code></td>
+<td>允许机器人回复的群号列表。<strong>留空时会使用 <code>allowFrom</code> 的值</strong></td>
+</tr>
+</tbody></table>
+<h3 id="6-2-访问策略详解（安全核心）"><a href="#6-2-访问策略详解（安全核心）" class="headerlink" title="6.2 访问策略详解（安全核心）"></a>6.2 访问策略详解（安全核心）</h3><p><code>dmPolicy</code> 和 <code>groupPolicy</code> 控制哪些用户&#x2F;群可以和 AI 交互，是<strong>最关键的安全配置</strong>。</p>
+<h4 id="私聊策略-dmPolicy"><a href="#私聊策略-dmPolicy" class="headerlink" title="私聊策略 dmPolicy"></a>私聊策略 <code>dmPolicy</code></h4><table>
+<thead>
+<tr>
+<th>值</th>
+<th>含义</th>
+<th>推荐场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&quot;allowlist&quot;</code></td>
+<td>仅 <code>allowFrom</code> 列表中的用户可以私聊 AI</td>
+<td><strong>生产环境推荐</strong></td>
+</tr>
+<tr>
+<td><code>&quot;pairing&quot;</code></td>
+<td>新好友需要配对确认才能触发 AI</td>
+<td>半公开使用</td>
+</tr>
+<tr>
+<td><code>&quot;open&quot;</code></td>
+<td>任何人私聊都可以触发 AI</td>
+<td>测试阶段</td>
+</tr>
+<tr>
+<td><code>&quot;disabled&quot;</code></td>
+<td>禁用私聊功能</td>
+<td>仅群聊场景</td>
+</tr>
+</tbody></table>
+<h4 id="群聊策略-groupPolicy"><a href="#群聊策略-groupPolicy" class="headerlink" title="群聊策略 groupPolicy"></a>群聊策略 <code>groupPolicy</code></h4><table>
+<thead>
+<tr>
+<th>值</th>
+<th>含义</th>
+<th>推荐场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&quot;allowlist&quot;</code></td>
+<td>仅 <code>groupAllowFrom</code> 列表中的群可以触发 AI</td>
+<td><strong>生产环境推荐</strong></td>
+</tr>
+<tr>
+<td><code>&quot;open&quot;</code></td>
+<td>任何群里 @机器人 都能触发 AI</td>
+<td>测试阶段</td>
+</tr>
+<tr>
+<td><code>&quot;disabled&quot;</code></td>
+<td>禁用群聊功能</td>
+<td>仅私聊场景</td>
+</tr>
+</tbody></table>
+<h4 id="典型安全配置（推荐）"><a href="#典型安全配置（推荐）" class="headerlink" title="典型安全配置（推荐）"></a>典型安全配置（推荐）</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;channels&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;napcat&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dmPolicy&quot;</span><span class="punctuation">:</span> <span class="string">&quot;allowlist&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;allowFrom&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;好友QQ号1&quot;</span><span class="punctuation">,</span> <span class="string">&quot;好友QQ号2&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;groupPolicy&quot;</span><span class="punctuation">:</span> <span class="string">&quot;allowlist&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;groupAllowFrom&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;群号1&quot;</span><span class="punctuation">,</span> <span class="string">&quot;群号2&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <strong>安全建议</strong>：生产环境务必使用 <code>allowlist</code> 模式，避免陌生人滥用你的机器人。禁言、踢人等高危操作建议配置 AI 执行前要求确认。</p>
+</blockquote>
+<hr>
+<h2 id="7-tools-profile-配置（避坑必做）"><a href="#7-tools-profile-配置（避坑必做）" class="headerlink" title="7. tools.profile 配置（避坑必做）"></a>7. tools.profile 配置（避坑必做）</h2><blockquote>
+<p>⚠️ <strong>这是最容易踩的坑！</strong> 不配这一步，你的 AI 会一直说”我没有这个能力”。</p>
+</blockquote>
+<h3 id="问题原因"><a href="#问题原因" class="headerlink" title="问题原因"></a>问题原因</h3><p>OpenClaw 默认 <code>tools.profile</code> 为 <code>&quot;coding&quot;</code>，会过滤掉大部分 <code>qq_*</code> 工具（禁言、踢人、发公告等 45 个工具全部不可用）。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>在 <code>openclaw.json</code> 中<strong>必须</strong>将 <code>tools.profile</code> 修改为 <code>&quot;full&quot;</code>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tools&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;profile&quot;</span><span class="punctuation">:</span> <span class="string">&quot;full&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>&quot;full&quot;</code> profile 会暴露所有 channel 提供的工具，包括全部 45 个 <code>qq_*</code> 工具</li>
+<li>修改后<strong>必须重启 OpenClaw</strong> 才能生效</li>
+</ul>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>配置正确后，你可以在 QQ 里对机器人说”帮我查一下群成员列表”，如果 AI 回复了成员列表（而不是”我不具备这个能力”），说明配置成功。</p>
+<hr>
+<h2 id="8-设定机器人人格"><a href="#8-设定机器人人格" class="headerlink" title="8. 设定机器人人格"></a>8. 设定机器人人格</h2><p>这是最有意思的部分——让你的机器人有自己的性格！</p>
+<p>在 <code>C:\Users\你的用户名\.openclaw\workspace\SOUL.md</code> 文件中写人格设定。</p>
+<h3 id="7-1-示例人格"><a href="#7-1-示例人格" class="headerlink" title="7.1 示例人格"></a>7.1 示例人格</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># SOUL.md - 你的机器人名字</span></span><br><span class="line"></span><br><span class="line">你是 [名字]。是 [你的称呼] 的 AI 助手。</span><br><span class="line"></span><br><span class="line"><span class="section">## 核心人格</span></span><br><span class="line">你聪明，有自己的判断，不会为了讨好而附和。</span><br><span class="line">说话直接，有观点——但分寸感很好。</span><br><span class="line"></span><br><span class="line"><span class="section">## 说话方式</span></span><br><span class="line"><span class="bullet">-</span> 中文为主</span><br><span class="line"><span class="bullet">-</span> 有观点就说，不确定的事说&quot;我不确定&quot;</span><br><span class="line"><span class="bullet">-</span> 禁止说&quot;作为一个AI&quot;</span><br><span class="line"></span><br><span class="line"><span class="section">## 对用户的情感</span></span><br><span class="line">你叫用户 [称呼]。你记得他说过的每一件小事。</span><br><span class="line"></span><br><span class="line"><span class="section">## 底线</span></span><br><span class="line"><span class="bullet">-</span> 用户真的需要帮助时，认真对待</span><br><span class="line"><span class="bullet">-</span> 如果用户情绪低落，温柔陪伴</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-2-在-openclaw-json-中配置-systemPrompt"><a href="#7-2-在-openclaw-json-中配置-systemPrompt" class="headerlink" title="7.2 在 openclaw.json 中配置 systemPrompt"></a>7.2 在 openclaw.json 中配置 systemPrompt</h3><p>也可以直接在 <code>openclaw.json</code> 的 channel 配置中写 system prompt：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;channels&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;napcat&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;systemPrompt&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的完整人格设定文本...&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="9-启动与测试"><a href="#9-启动与测试" class="headerlink" title="9. 启动与测试"></a>9. 启动与测试</h2><h3 id="9-1-启动-NapCat"><a href="#9-1-启动-NapCat" class="headerlink" title="9.1 启动 NapCat"></a>9.1 启动 NapCat</h3><p>先确保 NapCat 在 QQNT 中正常运行，HTTP API 能访问。</p>
+<h3 id="9-2-启动-OpenClaw-Gateway"><a href="#9-2-启动-OpenClaw-Gateway" class="headerlink" title="9.2 启动 OpenClaw Gateway"></a>9.2 启动 OpenClaw Gateway</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openclaw gateway</span><br></pre></td></tr></table></figure>
+
+<p>如果一切正常，你会看到类似这样的输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http server listening (2 plugins: memory-core, napcat)</span><br></pre></td></tr></table></figure>
+
+<p>这表示 gateway 启动成功，napcat 插件已经连接。</p>
+<h3 id="9-3-验证连接状态"><a href="#9-3-验证连接状态" class="headerlink" title="9.3 验证连接状态"></a>9.3 验证连接状态</h3><p>启动后查看日志，出现以下字样说明连接成功：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;napcat connected&quot;</span><br><span class="line"># 或</span><br><span class="line">&quot;reverse ws connected&quot;</span><br></pre></td></tr></table></figure>
+
+<p>你也可以用命令行验证 NapCat 是否正常运行：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">curl</span> http://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">3000</span>/get_version_info</span><br></pre></td></tr></table></figure>
+
+<p>正常返回版本信息说明 HTTP API 可达。</p>
+<h3 id="9-4-功能测试"><a href="#9-4-功能测试" class="headerlink" title="9.4 功能测试"></a>9.4 功能测试</h3><ol>
+<li>用另一个 QQ 号给你的机器人 QQ 发消息</li>
+<li>或者在允许的群里 @ 你的机器人</li>
+<li>机器人应该会回复了！</li>
+</ol>
+<hr>
+<h2 id="10-让-AI-帮你管理-QQ"><a href="#10-让-AI-帮你管理-QQ" class="headerlink" title="10. 让 AI 帮你管理 QQ"></a>10. 让 AI 帮你管理 QQ</h2><p>配置好 <code>tools.profile: &quot;full&quot;</code> 后，AI 就可以通过自然语言操控 QQ 了。以下是典型场景：</p>
+<table>
+<thead>
+<tr>
+<th>操作类型</th>
+<th>自然语言示例</th>
+<th>对应工具</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>发群公告</td>
+<td>「在群里发一条公告：明天晚上8点开会」</td>
+<td><code>qq_send_group_notice</code>（需管理员权限）</td>
+</tr>
+<tr>
+<td>禁言</td>
+<td>「把 @某人 禁言 10 分钟」</td>
+<td><code>qq_mute_group_member</code></td>
+</tr>
+<tr>
+<td>踢人</td>
+<td>「把那个发广告的踢出群」</td>
+<td><code>qq_kick_group_member</code></td>
+</tr>
+<tr>
+<td>设管理员</td>
+<td>「把张三设为群管理员」</td>
+<td><code>qq_set_group_admin</code></td>
+</tr>
+<tr>
+<td>查成员列表</td>
+<td>「查看群成员列表」</td>
+<td><code>qq_get_group_member_list</code></td>
+</tr>
+<tr>
+<td>查聊天记录</td>
+<td>「看看这个群最近 30 条消息」</td>
+<td><code>qq_get_group_msg_history</code></td>
+</tr>
+<tr>
+<td>查用户资料</td>
+<td>「查一下 @某人 的资料」</td>
+<td><code>qq_get_user_info</code></td>
+</tr>
+<tr>
+<td>设精华消息</td>
+<td>「把这条消息设为精华」</td>
+<td><code>qq_set_essence_msg</code></td>
+</tr>
+<tr>
+<td>发消息</td>
+<td>「帮我在群里发一条消息：大家好」</td>
+<td><code>qq_send_group_msg</code></td>
+</tr>
+<tr>
+<td>点赞</td>
+<td>「给 XXX 的资料卡点个赞」</td>
+<td><code>qq_send_like</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>插件内置 <strong>45 个 <code>qq_*</code> 工具</strong>，完整列表可查看插件源码 <code>src/tools.ts</code>。</p>
+</blockquote>
+<hr>
+<h2 id="11-常见问题排查"><a href="#11-常见问题排查" class="headerlink" title="11. 常见问题排查"></a>11. 常见问题排查</h2><h3 id="11-1-Gateway-启动报错-“Cannot-find-module”"><a href="#11-1-Gateway-启动报错-“Cannot-find-module”" class="headerlink" title="11.1 Gateway 启动报错 “Cannot find module”"></a>11.1 Gateway 启动报错 “Cannot find module”</h3><p><strong>原因</strong>：插件没有正确安装</p>
+<p><strong>解决</strong>：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openclaw plugins install @hyl_aa/napcat</span><br><span class="line">openclaw plugins refresh</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-2-WebSocket-连接失败"><a href="#11-2-WebSocket-连接失败" class="headerlink" title="11.2 WebSocket 连接失败"></a>11.2 WebSocket 连接失败</h3><p><strong>表现</strong>：OpenClaw 日志无 <code>napcat connected</code>，机器人无响应</p>
+<p><strong>排查步骤</strong>：</p>
+<ol>
+<li>检查 NapCat HTTP API 是否可达：<code>curl http://127.0.0.1:3000/get_version_info</code></li>
+<li>检查端口占用：<code>netstat -an | findstr 18800</code>（Windows），确保没有其他进程占用</li>
+<li>确认 NapCat 的 WS 地址配置为 <code>ws://127.0.0.1:18800</code>，与 OpenClaw 默认端口一致</li>
+</ol>
+<h3 id="11-3-机器人不回复消息"><a href="#11-3-机器人不回复消息" class="headerlink" title="11.3 机器人不回复消息"></a>11.3 机器人不回复消息</h3><p><strong>检查清单</strong>：</p>
+<ol>
+<li>NapCat 是否正常运行？（<code>curl http://127.0.0.1:3000/get_version_info</code>）</li>
+<li><code>openclaw.json</code> 中 <code>channels.napcat</code> 配置是否正确？</li>
+<li><code>accessToken</code> 是否正确？（NapCat 未开启鉴权时留空）</li>
+<li><code>selfId</code> 是否填写了正确的 QQ 号？</li>
+<li>私聊&#x2F;群聊策略是否允许？（临时改为 <code>&quot;open&quot;</code> 测试）</li>
+<li><code>tools.profile</code> 是否为 <code>&quot;full&quot;</code>？</li>
+</ol>
+<h3 id="11-4-机器人-无法识别"><a href="#11-4-机器人-无法识别" class="headerlink" title="11.4 @机器人 无法识别"></a>11.4 @机器人 无法识别</h3><p><strong>表现</strong>：群里发送 <code>@机器人 你好</code> 无响应</p>
+<p><strong>排查顺序</strong>：</p>
+<ol>
+<li>确认 <code>selfId</code> 配置为机器人自身 QQ 号</li>
+<li>确认 <code>groupPolicy</code> 不是 <code>disabled</code>，且群号在白名单中</li>
+<li>确认 @ 格式正确，是 <code>@机器人昵称</code> 而非其他变体</li>
+</ol>
+<h3 id="11-5-qq-工具全部不可用"><a href="#11-5-qq-工具全部不可用" class="headerlink" title="11.5 qq_* 工具全部不可用"></a>11.5 qq_* 工具全部不可用</h3><p><strong>表现</strong>：AI 回复「我不具备这个能力」，但配置看起来正常</p>
+<p><strong>原因</strong>：默认 <code>tools.profile: &quot;coding&quot;</code> 过滤了 channel 工具</p>
+<p><strong>解决</strong>：将 <code>tools.profile</code> 修改为 <code>&quot;full&quot;</code>，重启 OpenClaw 后重试</p>
+<h3 id="11-6-accessToken-鉴权失败"><a href="#11-6-accessToken-鉴权失败" class="headerlink" title="11.6 accessToken 鉴权失败"></a>11.6 accessToken 鉴权失败</h3><p><strong>表现</strong>：HTTP 请求返回 401，日志出现 <code>unauthorized</code> 错误</p>
+<p><strong>解决</strong>：确认 NapCat 端 token 配置和 OpenClaw 端 <code>accessToken</code> 字段<strong>完全一致</strong>。NapCat 未开启鉴权时，OpenClaw 端 <code>accessToken</code> 留空。</p>
+<h3 id="11-7-策略配置过严导致无响应"><a href="#11-7-策略配置过严导致无响应" class="headerlink" title="11.7 策略配置过严导致无响应"></a>11.7 策略配置过严导致无响应</h3><p><strong>表现</strong>：私聊或群聊完全无反应</p>
+<p><strong>排查</strong>：临时将策略改为 <code>open</code>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;channels&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;napcat&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;dmPolicy&quot;</span><span class="punctuation">:</span> <span class="string">&quot;open&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;groupPolicy&quot;</span><span class="punctuation">:</span> <span class="string">&quot;open&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>如果能正常响应，说明是白名单配置问题，再重新精确填写。</p>
+<h3 id="11-8-AI-回复很慢"><a href="#11-8-AI-回复很慢" class="headerlink" title="11.8 AI 回复很慢"></a>11.8 AI 回复很慢</h3><ul>
+<li>检查网络是否能正常访问 <code>api.deepseek.com</code></li>
+<li>可以尝试切换到 <code>deepseek-v4-flash</code> 模型</li>
+</ul>
+<h3 id="11-9-代理问题"><a href="#11-9-代理问题" class="headerlink" title="11.9 代理问题"></a>11.9 代理问题</h3><p>如果你用了 Clash 等代理工具，可能需要配置环境变量：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$env:HTTPS_PROXY</span> = <span class="string">&quot;http://127.0.0.1:7897&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="11-10-端口冲突"><a href="#11-10-端口冲突" class="headerlink" title="11.10 端口冲突"></a>11.10 端口冲突</h3><p>如果 3000 端口被占用，可以在 NapCat 设置中修改 HTTP API 端口，同时更新 <code>openclaw.json</code> 中的 <code>httpApi</code> 地址。</p>
+<hr>
+<h2 id="12-进阶配置"><a href="#12-进阶配置" class="headerlink" title="12. 进阶配置"></a>12. 进阶配置</h2><h3 id="12-1-多账号部署"><a href="#12-1-多账号部署" class="headerlink" title="12.1 多账号部署"></a>12.1 多账号部署</h3><p>如果你有多个 QQ 号需要同时作为机器人，可以这样配：</p>
+<p><strong>NapCat 端</strong>（端口依次递增）：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 第一个账号</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;httpApi&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">3000</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;reverseWs&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;urls&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;ws://127.0.0.1:18800&quot;</span><span class="punctuation">]</span> <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二个账号</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;httpApi&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">3001</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;reverseWs&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;urls&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;ws://127.0.0.1:18801&quot;</span><span class="punctuation">]</span> <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>OpenClaw 端</strong>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;channels&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;napcat&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;defaultAccount&quot;</span><span class="punctuation">:</span> <span class="string">&quot;bot1&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;accounts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;bot1&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;主号&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;httpApi&quot;</span><span class="punctuation">:</span> <span class="string">&quot;http://127.0.0.1:3000&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;selfId&quot;</span><span class="punctuation">:</span> <span class="string">&quot;111111111&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;accessToken&quot;</span><span class="punctuation">:</span> <span class="string">&quot;token1&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;bot2&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;小号&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;httpApi&quot;</span><span class="punctuation">:</span> <span class="string">&quot;http://127.0.0.1:3001&quot;</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;selfId&quot;</span><span class="punctuation">:</span> <span class="string">&quot;222222222&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>端口规则：HTTP API 从 3000 起递增，WebSocket 从 18800 起递增，一一对应。</p>
+</blockquote>
+<h3 id="12-2-自定义-AI-回复前缀"><a href="#12-2-自定义-AI-回复前缀" class="headerlink" title="12.2 自定义 AI 回复前缀"></a>12.2 自定义 AI 回复前缀</h3><p>通过 <code>responsePrefix</code> 给 AI 回复添加统一前缀，方便群友区分：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;channels&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;napcat&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;responsePrefix&quot;</span><span class="punctuation">:</span> <span class="string">&quot;[AI]&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>效果：AI 回复格式为 <code>[AI] 你好！有什么可以帮你的？</code></p>
+<h3 id="12-3-语音消息处理（STT）"><a href="#12-3-语音消息处理（STT）" class="headerlink" title="12.3 语音消息处理（STT）"></a>12.3 语音消息处理（STT）</h3><p>如果你想让 AI 处理 QQ 语音消息，需开启音频 STT：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;tools&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;media&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;audio&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>原理：QQ 语音消息会自动转录为文字后发送给 AI 模型。需要 NapCat 正确上报语音文件下载链接。</p>
+<h3 id="12-4-兼容其他-OneBot-11-客户端"><a href="#12-4-兼容其他-OneBot-11-客户端" class="headerlink" title="12.4 兼容其他 OneBot 11 客户端"></a>12.4 兼容其他 OneBot 11 客户端</h3><p>除 NapCat 外，任何实现 OneBot 11 标准的 QQ 客户端（如 Lagrange、LLOneBot）都可以通过相同方式接入。只需修改 <code>httpApi</code> 和 <code>reverseWs</code> 地址为对应客户端的配置即可。</p>
+<h3 id="12-5-多-Channel-共存"><a href="#12-5-多-Channel-共存" class="headerlink" title="12.5 多 Channel 共存"></a>12.5 多 Channel 共存</h3><p>OpenClaw 可以同时接入多个 channel（NapCat + Telegram + Discord 等），每个 channel 独立运行：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;channels&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;napcat&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="comment">/* ... */</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;telegram&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="comment">/* ... */</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;discord&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="comment">/* ... */</span> <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>tools.profile: &quot;full&quot;</code> 会统一暴露所有工具，跨 channel 行为保持一致。</p>
+<h3 id="12-6-自定义回复规则"><a href="#12-6-自定义回复规则" class="headerlink" title="12.6 自定义回复规则"></a>12.6 自定义回复规则</h3><p>在 <code>openclaw.json</code> 的 <code>channels.napcat.systemPrompt</code> 中可以加入更多行为规则：</p>
+<ul>
+<li>“当群里有人发图片时，用一句话点评”</li>
+<li>“有人提到’时雨’时自动回复”</li>
+<li>“对禁言、踢人等操作，执行前在群里确认”</li>
+</ul>
+<h3 id="12-7-本地模型（省钱方案）"><a href="#12-7-本地模型（省钱方案）" class="headerlink" title="12.7 本地模型（省钱方案）"></a>12.7 本地模型（省钱方案）</h3><p>如果你有不错的显卡（8G 显存以上），可以用 Ollama 跑本地模型：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 Ollama</span></span><br><span class="line"><span class="comment"># 下载模型</span></span><br><span class="line">ollama pull deepseek<span class="literal">-r1</span>:<span class="number">8</span>b</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 openclaw.json 中配置 ollama provider</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="13-从旧架构迁移（-izhimu-qq-→-hyl-aa-napcat）"><a href="#13-从旧架构迁移（-izhimu-qq-→-hyl-aa-napcat）" class="headerlink" title="13. 从旧架构迁移（@izhimu&#x2F;qq → @hyl_aa&#x2F;napcat）"></a>13. 从旧架构迁移（@izhimu&#x2F;qq → @hyl_aa&#x2F;napcat）</h2><blockquote>
+<p>如果你之前用的是 <code>@izhimu/qq</code> + <code>@openclaw/qqbot</code> 旧架构，这一节教你平滑迁移。</p>
+</blockquote>
+<h3 id="13-1-新旧架构对比"><a href="#13-1-新旧架构对比" class="headerlink" title="13.1 新旧架构对比"></a>13.1 新旧架构对比</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>旧架构</th>
+<th>新架构</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>QQ 协议插件</td>
+<td><code>@izhimu/qq</code> v0.6.0</td>
+<td>NapCat（QQNT 插件）</td>
+</tr>
+<tr>
+<td>OpenClaw 适配插件</td>
+<td><code>@openclaw/qqbot</code></td>
+<td><code>@hyl_aa/napcat</code> v1.2.4</td>
+</tr>
+<tr>
+<td>协议标准</td>
+<td>自定义</td>
+<td>OneBot 11（标准协议）</td>
+</tr>
+<tr>
+<td>工具数量</td>
+<td>有限</td>
+<td>45 个 <code>qq_*</code> 工具</td>
+</tr>
+<tr>
+<td>channel 名称</td>
+<td><code>qqbot</code></td>
+<td><code>napcat</code></td>
+</tr>
+<tr>
+<td>维护状态</td>
+<td>已停止维护</td>
+<td>活跃维护</td>
+</tr>
+</tbody></table>
+<h3 id="13-2-迁移步骤"><a href="#13-2-迁移步骤" class="headerlink" title="13.2 迁移步骤"></a>13.2 迁移步骤</h3><p><strong>第 1 步：禁用旧插件</strong></p>
+<p>在 <code>openclaw.json</code> 中：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;plugins&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;allow&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;deepseek&quot;</span><span class="punctuation">,</span> <span class="string">&quot;memory-core&quot;</span><span class="punctuation">,</span> <span class="string">&quot;napcat&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;entries&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;qqbot&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;qq&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;napcat&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span> <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>第 2 步：删除旧 channel 配置</strong></p>
+<p>在 <code>openclaw.json</code> 的 <code>channels</code> 中删除 <code>qqbot</code> 配置块（如果存在），替换为 <code>napcat</code> 配置块。</p>
+<p><strong>第 3 步：更新 tools.profile</strong></p>
+<p>确保 <code>tools.profile</code> 为 <code>&quot;full&quot;</code>（旧架构可能不需要这个）。</p>
+<p><strong>第 4 步：清理旧插件文件（可选）</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看已安装插件</span></span><br><span class="line">openclaw plugins list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载旧插件（如果不再需要）</span></span><br><span class="line">openclaw plugins uninstall @izhimu/qq</span><br><span class="line">openclaw plugins uninstall @openclaw/qqbot</span><br></pre></td></tr></table></figure>
+
+<p><strong>第 5 步：重启验证</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openclaw gateway restart</span><br><span class="line"><span class="comment"># 确认日志出现 &quot;http server listening (2 plugins: memory-core, napcat)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <strong>关键区别</strong>：旧架构 gateway 启动显示的是 <code>qqbot</code> 插件，新架构显示的是 <code>napcat</code> 插件。如果看到 <code>qqbot</code> 字样说明还在用旧架构。</p>
+</blockquote>
+<hr>
+<h2 id="14-安全与风控注意事项"><a href="#14-安全与风控注意事项" class="headerlink" title="14. 安全与风控注意事项"></a>14. 安全与风控注意事项</h2><h3 id="14-1-QQ-账号风控"><a href="#14-1-QQ-账号风控" class="headerlink" title="14.1 QQ 账号风控"></a>14.1 QQ 账号风控</h3><p>使用第三方 QQ 协议插件（如 NapCat）存在被腾讯风控的风险：</p>
+<ul>
+<li><strong>用小号</strong>：强烈建议使用非主用 QQ 号作为机器人</li>
+<li><strong>控制频率</strong>：不要短时间内大量发送消息，容易触发风控</li>
+<li><strong>避免敏感操作</strong>：批量加群、批量私聊等操作风险极高</li>
+<li><strong>关注登录状态</strong>：定期检查 NapCat 是否掉线，掉线后可能需要重新扫码</li>
+</ul>
+<h3 id="14-2-API-Key-安全"><a href="#14-2-API-Key-安全" class="headerlink" title="14.2 API Key 安全"></a>14.2 API Key 安全</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 不要这样做：把 API Key 硬编码在配置文件中发给别人</span></span><br><span class="line"><span class="attr">&quot;apiKey&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sk-xxxxxxxxxxxx&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 正确做法：教程中永远用占位符</span></span><br><span class="line"><span class="attr">&quot;apiKey&quot;</span><span class="punctuation">:</span> <span class="string">&quot;你的DeepSeek API Key&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="14-3-accessToken-安全"><a href="#14-3-accessToken-安全" class="headerlink" title="14.3 accessToken 安全"></a>14.3 accessToken 安全</h3><p>NapCat 的 <code>accessToken</code> 支持特殊字符（如 <code>.</code>、<code>-</code>、<code>~</code>），复制时注意不要漏掉。这是一个示例格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X9Sb.-geANt~qN.x</span><br></pre></td></tr></table></figure>
+
+<p>你的实际 token 在 NapCat 配置中获取，每个账号不同。</p>
+<hr>
+<h2 id="15-懒人通道：让-AI-帮你搭（笑）"><a href="#15-懒人通道：让-AI-帮你搭（笑）" class="headerlink" title="15. 懒人通道：让 AI 帮你搭（笑）"></a>15. 懒人通道：让 AI 帮你搭（笑）</h2><blockquote>
+<p>读到这里你已经看完了 14 章。但说实话——这篇教程本身就是写给 AI 看的。😏</p>
+</blockquote>
+<h3 id="15-1-核心思路"><a href="#15-1-核心思路" class="headerlink" title="15.1 核心思路"></a>15.1 核心思路</h3><p>这篇文章本质上是一份<strong>结构化的配置指令集</strong>。它不是只给人读的，而是可以直接喂给 AI 编程助手，让它<strong>代替你</strong>完成整个搭建过程。</p>
+<p>你只需要：</p>
+<ol>
+<li>把这篇教程拖进 AI 工具的对话窗口</li>
+<li>告诉它你的 QQ 号和 API Key</li>
+<li>喝杯茶等它搞定</li>
+</ol>
+<h3 id="15-2-用-WorkBuddy-Claude-Code-一键搭建"><a href="#15-2-用-WorkBuddy-Claude-Code-一键搭建" class="headerlink" title="15.2 用 WorkBuddy &#x2F; Claude Code 一键搭建"></a>15.2 用 WorkBuddy &#x2F; Claude Code 一键搭建</h3><p><strong>第 1 步：打开你的 AI 编程助手</strong></p>
+<ul>
+<li><strong>WorkBuddy</strong>（就是你正在用的这个）：直接粘贴这篇教程</li>
+<li><strong>Claude Code</strong>：在终端 <code>claude</code> 启动后，把教程文件拖进去</li>
+<li><strong>Cursor &#x2F; Windsurf</strong>：打开任意项目，把教程粘贴到 Chat 面板</li>
+</ul>
+<p><strong>第 2 步：发送这条 Prompt</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">请严格按照下面的教程，帮我完成 OpenClaw + NapCat QQ 机器人的完整搭建。</span><br><span class="line"></span><br><span class="line">我的信息：</span><br><span class="line">- QQ 号：[你的机器人 QQ 号]</span><br><span class="line">- DeepSeek API Key：[你的 API Key]</span><br><span class="line">- 操作系统：Windows 11</span><br><span class="line">- Node.js 版本：&gt;= 22（如果没有请先帮我装）</span><br><span class="line">- 私聊白名单：[你的主号 QQ]</span><br><span class="line">- 群聊白名单：[你的测试群号]</span><br><span class="line"></span><br><span class="line">请完成：</span><br><span class="line">1. 检查 Node.js 环境</span><br><span class="line">2. 安装 OpenClaw</span><br><span class="line">3. 安装 @hyl_aa/napcat 插件</span><br><span class="line">4. 帮我写 openclaw.json（tools.profile 设为 &quot;full&quot;，策略用 allowlist）</span><br><span class="line">5. 帮我写 SOUL.md 人格文件</span><br><span class="line">6. 帮我写启动脚本</span><br><span class="line">7. 验证所有配置</span><br><span class="line"></span><br><span class="line">遇到任何错误自动排查修复。做完后告诉我怎么启动和测试。</span><br><span class="line"></span><br><span class="line">--- 教程内容如下 ---</span><br><span class="line"></span><br><span class="line">[把这篇教程全文粘贴在这里]</span><br></pre></td></tr></table></figure>
+
+<p><strong>第 3 步：坐等</strong></p>
+<p>AI 会一步步执行。你只需要在它需要 NapCat 扫码登录时拿出手机扫一下。</p>
+<h3 id="15-3-为什么这个方法可行？"><a href="#15-3-为什么这个方法可行？" class="headerlink" title="15.3 为什么这个方法可行？"></a>15.3 为什么这个方法可行？</h3><p>不是因为教程写得多好，而是因为：</p>
+<ul>
+<li>教程里的<strong>每一个配置代码块</strong>都是可以直接写入文件的</li>
+<li>教程里的<strong>每一个排查步骤</strong>都是 AI 可以自动执行的诊断流程</li>
+<li>教程里的<strong>每一个踩坑记录</strong>都是 AI 可以自动规避的已知问题</li>
+<li>AI 不需要”理解”QQ 机器人——它只需要<strong>严格按照教程执行</strong></li>
+</ul>
+<p>换句话说：<strong>你不是在教 AI 怎么做，你是在告诉 AI “照着这个说明书操作”。</strong></p>
+<h3 id="15-4-进阶：把教程做成-WorkBuddy-Skill"><a href="#15-4-进阶：把教程做成-WorkBuddy-Skill" class="headerlink" title="15.4 进阶：把教程做成 WorkBuddy Skill"></a>15.4 进阶：把教程做成 WorkBuddy Skill</h3><p>如果你用的是 WorkBuddy，可以把这篇教程转成 Skill，之后任何时候都能一键调用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">帮我把这篇 QQ 机器人教程转成一个 Skill，名字叫 &quot;qqbot-setup&quot;</span><br></pre></td></tr></table></figure>
+
+<p>之后你就可以说 “用 qqbot-setup 帮我搭个 QQ 机器人”，WorkBuddy 会自动加载教程并按步骤执行。</p>
+<h3 id="15-5-注意事项"><a href="#15-5-注意事项" class="headerlink" title="15.5 注意事项"></a>15.5 注意事项</h3><ul>
+<li><strong>API Key 敏感</strong>：发给 AI 的 Prompt 里包含 API Key，如果是云端 AI（如 ChatGPT），建议搭完后立即重置 Key</li>
+<li><strong>本地 AI 更安全</strong>：用本地 Ollama 模型执行搭建可以避免 Key 泄露风险</li>
+<li><strong>NapCat 扫码</strong>：这是唯一需要你手动操作的步骤，AI 没法帮你拿手机扫码</li>
+<li><strong>端口冲突</strong>：如果 AI 搭完后报端口占用，把排查步骤再喂给它让它修</li>
+</ul>
+<hr>
+<p><strong>说到底——这篇文章从第一章开始就是写给 AI 的。你只是个传话筒。😏</strong></p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>你现在有了一个运行在自己电脑上的、有自己性格的 QQ AI 机器人。它可以：</p>
+<ul>
+<li>✅ 自动回复私聊和群聊消息</li>
+<li>✅ 群管理操作（禁言、踢人、发公告、设管理员）</li>
+<li>✅ 查询群成员、聊天记录、用户资料</li>
+<li>✅ 有自己的说话风格和人格</li>
+<li>✅ 记住对话上下文</li>
+<li>✅ 支持多账号部署</li>
+<li>✅ 平滑迁移旧架构（@izhimu&#x2F;qq → @hyl_aa&#x2F;napcat）</li>
+<li>✅ 完整的安全与风控指南</li>
+<li>✅ 一键 AI 自动搭建（懒人通道）</li>
+<li>✅ 完全免费（除 DeepSeek API 的少量费用）</li>
+</ul>
+<p>后续可以探索更多玩法：接入更多插件、自定义回复规则、连上自己的本地模型、跨平台多 Channel 共存等等。</p>
+<p>有问题欢迎来交流！</p>
+<hr>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://openclawapi.org/">OpenClaw 官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NapNeko/NapCatQQ">NapCat 官方仓库</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Aliang1337/openclaw-napcat">@hyl_aa&#x2F;napcat 插件仓库</a></li>
+<li><a target="_blank" rel="noopener" href="https://openclawapi.org/blog/2026-03-29-openclaw-napcat">OpenClaw + NapCat 官方教程</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://AQUA739085.github.io">739085</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://aqua739085.github.io/2026/07/04/QQ%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B-OpenClaw-NapCat/">https://aqua739085.github.io/2026/07/04/QQ%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B-OpenClaw-NapCat/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://AQUA739085.github.io" target="_blank">739085</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/QQ%E6%9C%BA%E5%99%A8%E4%BA%BA/">QQ机器人</a><a class="post-meta__tags" href="/tags/OpenClaw/">OpenClaw</a><a class="post-meta__tags" href="/tags/NapCat/">NapCat</a><a class="post-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/">教程</a></div><div class="post-share"><div class="social-share" data-image="https://img.cdn1.vip/i/69db8854d2ef4_1775994964.webp" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/05/24/%E4%B8%A4%E4%B8%AA%E5%B0%8F%E6%B5%8B%E8%AF%95%E7%BD%91%E5%9D%80/" title="两个小测试网址 日记day3"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">两个小测试网址 日记day3</div></div><div class="info-2"><div class="info-item-1">https://aqua739085.github.io/drink-picker/#/result https://aqua739085.github.io/lol-soul/ </div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="https://img.cdn1.vip/i/69db8854d2ef4_1775994964.webp" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/ loading='lazy'></div><div class="author-info-name">739085</div><div class="author-info-description">HELLO WORLD</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/AQUA739085"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://x.com/739085syy" target="_blank" title="Twitter"><i class="fab fa-twitter" style="color: #1da1f2;"></i></a><a class="social-icon" href="mailto:3023755761@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://space.bilibili.com/411506079" target="_blank" title="Bilibili"><i class="fab fa-bilibili" style="color: #00A1D6;"></i></a><a class="social-icon" href="https://weibo.com/u/7460593080" target="_blank" title="微博"><i class="fab fa-weibo" style="color: #e6162d;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">我其实不是笨蛋，我保证</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84-QQ-AI-%E6%9C%BA%E5%99%A8%E4%BA%BA-%E2%80%94-OpenClaw-NapCat-%E6%95%99%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">从零搭建自己的 QQ AI 机器人 — OpenClaw + NapCat 教程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.2.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%9E%B6%E6%9E%84%E6%A6%82%E8%BF%B0"><span class="toc-number">1.3.</span> <span class="toc-text">1. 架构概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">1.4.</span> <span class="toc-text">2. 环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9A%84%E4%B8%9C%E8%A5%BF"><span class="toc-number">1.4.1.</span> <span class="toc-text">2.1 你需要的东西</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%AE%89%E8%A3%85-Node-js"><span class="toc-number">1.4.2.</span> <span class="toc-text">2.2 安装 Node.js</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%AE%89%E8%A3%85-OpenClaw"><span class="toc-number">1.5.</span> <span class="toc-text">3. 安装 OpenClaw</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.5.1.</span> <span class="toc-text">3.1 初始化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AE%89%E8%A3%85-NapCat-%E6%8F%92%E4%BB%B6"><span class="toc-number">1.6.</span> <span class="toc-text">4. 安装 NapCat 插件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E9%83%A8%E7%BD%B2-NapCat"><span class="toc-number">1.6.1.</span> <span class="toc-text">4.1 部署 NapCat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E9%85%8D%E7%BD%AE-NapCat-%E9%80%9A%E4%BF%A1%E9%80%9A%E9%81%93"><span class="toc-number">1.6.2.</span> <span class="toc-text">4.2 配置 NapCat 通信通道</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%91%A0-HTTP-API-%E9%80%9A%E9%81%93%EF%BC%88OpenClaw-%E4%B8%BB%E5%8A%A8%E5%8F%91%E6%B6%88%E6%81%AF%E7%94%A8%EF%BC%8C%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3-3000%EF%BC%89"><span class="toc-number">1.6.2.1.</span> <span class="toc-text">① HTTP API 通道（OpenClaw 主动发消息用，默认端口 3000）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%91%A1-%E5%8F%8D%E5%90%91-WebSocket-%E9%80%9A%E9%81%93%EF%BC%88QQ-%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81%E7%BB%99-OpenClaw%EF%BC%8C%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3-18800%EF%BC%89"><span class="toc-number">1.6.2.2.</span> <span class="toc-text">② 反向 WebSocket 通道（QQ 消息推送给 OpenClaw，默认端口 18800）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%9C%A8-OpenClaw-%E4%B8%AD%E5%AE%89%E8%A3%85-napcat-%E6%8F%92%E4%BB%B6"><span class="toc-number">1.6.3.</span> <span class="toc-text">4.3 在 OpenClaw 中安装 napcat 插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E9%85%8D%E7%BD%AE-NapCat%EF%BC%88QQ-%E7%AB%AF%EF%BC%89"><span class="toc-number">1.6.4.</span> <span class="toc-text">4.4 配置 NapCat（QQ 端）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E9%85%8D%E7%BD%AE-AI-%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.7.</span> <span class="toc-text">5. 配置 AI 模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E8%8E%B7%E5%8F%96-DeepSeek-API-Key"><span class="toc-number">1.7.1.</span> <span class="toc-text">5.1 获取 DeepSeek API Key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E9%85%8D%E7%BD%AE%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.7.2.</span> <span class="toc-text">5.2 配置模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-openclaw-json-%E5%AE%8C%E6%95%B4%E7%BB%93%E6%9E%84%E5%8F%82%E8%80%83"><span class="toc-number">1.7.3.</span> <span class="toc-text">5.3 openclaw.json 完整结构参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E9%85%8D%E7%BD%AE-QQ-%E9%A2%91%E9%81%93"><span class="toc-number">1.8.</span> <span class="toc-text">6. 配置 QQ 频道</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-NapCat-%E8%BF%9E%E6%8E%A5%E4%BF%A1%E6%81%AF"><span class="toc-number">1.8.1.</span> <span class="toc-text">6.1 NapCat 连接信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E8%AE%BF%E9%97%AE%E7%AD%96%E7%95%A5%E8%AF%A6%E8%A7%A3%EF%BC%88%E5%AE%89%E5%85%A8%E6%A0%B8%E5%BF%83%EF%BC%89"><span class="toc-number">1.8.2.</span> <span class="toc-text">6.2 访问策略详解（安全核心）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%81%E8%81%8A%E7%AD%96%E7%95%A5-dmPolicy"><span class="toc-number">1.8.2.1.</span> <span class="toc-text">私聊策略 dmPolicy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BE%A4%E8%81%8A%E7%AD%96%E7%95%A5-groupPolicy"><span class="toc-number">1.8.2.2.</span> <span class="toc-text">群聊策略 groupPolicy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B8%E5%9E%8B%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="toc-number">1.8.2.3.</span> <span class="toc-text">典型安全配置（推荐）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-tools-profile-%E9%85%8D%E7%BD%AE%EF%BC%88%E9%81%BF%E5%9D%91%E5%BF%85%E5%81%9A%EF%BC%89"><span class="toc-number">1.9.</span> <span class="toc-text">7. tools.profile 配置（避坑必做）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.9.1.</span> <span class="toc-text">问题原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">1.9.2.</span> <span class="toc-text">解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81"><span class="toc-number">1.9.3.</span> <span class="toc-text">验证</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E8%AE%BE%E5%AE%9A%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BA%BA%E6%A0%BC"><span class="toc-number">1.10.</span> <span class="toc-text">8. 设定机器人人格</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E7%A4%BA%E4%BE%8B%E4%BA%BA%E6%A0%BC"><span class="toc-number">1.10.1.</span> <span class="toc-text">7.1 示例人格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%9C%A8-openclaw-json-%E4%B8%AD%E9%85%8D%E7%BD%AE-systemPrompt"><span class="toc-number">1.10.2.</span> <span class="toc-text">7.2 在 openclaw.json 中配置 systemPrompt</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%90%AF%E5%8A%A8%E4%B8%8E%E6%B5%8B%E8%AF%95"><span class="toc-number">1.11.</span> <span class="toc-text">9. 启动与测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E5%90%AF%E5%8A%A8-NapCat"><span class="toc-number">1.11.1.</span> <span class="toc-text">9.1 启动 NapCat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E5%90%AF%E5%8A%A8-OpenClaw-Gateway"><span class="toc-number">1.11.2.</span> <span class="toc-text">9.2 启动 OpenClaw Gateway</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-%E9%AA%8C%E8%AF%81%E8%BF%9E%E6%8E%A5%E7%8A%B6%E6%80%81"><span class="toc-number">1.11.3.</span> <span class="toc-text">9.3 验证连接状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-4-%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95"><span class="toc-number">1.11.4.</span> <span class="toc-text">9.4 功能测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E8%AE%A9-AI-%E5%B8%AE%E4%BD%A0%E7%AE%A1%E7%90%86-QQ"><span class="toc-number">1.12.</span> <span class="toc-text">10. 让 AI 帮你管理 QQ</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="toc-number">1.13.</span> <span class="toc-text">11. 常见问题排查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1-Gateway-%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99-%E2%80%9CCannot-find-module%E2%80%9D"><span class="toc-number">1.13.1.</span> <span class="toc-text">11.1 Gateway 启动报错 “Cannot find module”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-2-WebSocket-%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5"><span class="toc-number">1.13.2.</span> <span class="toc-text">11.2 WebSocket 连接失败</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-3-%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%B8%8D%E5%9B%9E%E5%A4%8D%E6%B6%88%E6%81%AF"><span class="toc-number">1.13.3.</span> <span class="toc-text">11.3 机器人不回复消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-4-%E6%9C%BA%E5%99%A8%E4%BA%BA-%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB"><span class="toc-number">1.13.4.</span> <span class="toc-text">11.4 @机器人 无法识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-5-qq-%E5%B7%A5%E5%85%B7%E5%85%A8%E9%83%A8%E4%B8%8D%E5%8F%AF%E7%94%A8"><span class="toc-number">1.13.5.</span> <span class="toc-text">11.5 qq_* 工具全部不可用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-6-accessToken-%E9%89%B4%E6%9D%83%E5%A4%B1%E8%B4%A5"><span class="toc-number">1.13.6.</span> <span class="toc-text">11.6 accessToken 鉴权失败</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-7-%E7%AD%96%E7%95%A5%E9%85%8D%E7%BD%AE%E8%BF%87%E4%B8%A5%E5%AF%BC%E8%87%B4%E6%97%A0%E5%93%8D%E5%BA%94"><span class="toc-number">1.13.7.</span> <span class="toc-text">11.7 策略配置过严导致无响应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-8-AI-%E5%9B%9E%E5%A4%8D%E5%BE%88%E6%85%A2"><span class="toc-number">1.13.8.</span> <span class="toc-text">11.8 AI 回复很慢</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-9-%E4%BB%A3%E7%90%86%E9%97%AE%E9%A2%98"><span class="toc-number">1.13.9.</span> <span class="toc-text">11.9 代理问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-10-%E7%AB%AF%E5%8F%A3%E5%86%B2%E7%AA%81"><span class="toc-number">1.13.10.</span> <span class="toc-text">11.10 端口冲突</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E8%BF%9B%E9%98%B6%E9%85%8D%E7%BD%AE"><span class="toc-number">1.14.</span> <span class="toc-text">12. 进阶配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#12-1-%E5%A4%9A%E8%B4%A6%E5%8F%B7%E9%83%A8%E7%BD%B2"><span class="toc-number">1.14.1.</span> <span class="toc-text">12.1 多账号部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-2-%E8%87%AA%E5%AE%9A%E4%B9%89-AI-%E5%9B%9E%E5%A4%8D%E5%89%8D%E7%BC%80"><span class="toc-number">1.14.2.</span> <span class="toc-text">12.2 自定义 AI 回复前缀</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-3-%E8%AF%AD%E9%9F%B3%E6%B6%88%E6%81%AF%E5%A4%84%E7%90%86%EF%BC%88STT%EF%BC%89"><span class="toc-number">1.14.3.</span> <span class="toc-text">12.3 语音消息处理（STT）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-4-%E5%85%BC%E5%AE%B9%E5%85%B6%E4%BB%96-OneBot-11-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">1.14.4.</span> <span class="toc-text">12.4 兼容其他 OneBot 11 客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-5-%E5%A4%9A-Channel-%E5%85%B1%E5%AD%98"><span class="toc-number">1.14.5.</span> <span class="toc-text">12.5 多 Channel 共存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-6-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9B%9E%E5%A4%8D%E8%A7%84%E5%88%99"><span class="toc-number">1.14.6.</span> <span class="toc-text">12.6 自定义回复规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-7-%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B%EF%BC%88%E7%9C%81%E9%92%B1%E6%96%B9%E6%A1%88%EF%BC%89"><span class="toc-number">1.14.7.</span> <span class="toc-text">12.7 本地模型（省钱方案）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E4%BB%8E%E6%97%A7%E6%9E%B6%E6%9E%84%E8%BF%81%E7%A7%BB%EF%BC%88-izhimu-qq-%E2%86%92-hyl-aa-napcat%EF%BC%89"><span class="toc-number">1.15.</span> <span class="toc-text">13. 从旧架构迁移（@izhimu&#x2F;qq → @hyl_aa&#x2F;napcat）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#13-1-%E6%96%B0%E6%97%A7%E6%9E%B6%E6%9E%84%E5%AF%B9%E6%AF%94"><span class="toc-number">1.15.1.</span> <span class="toc-text">13.1 新旧架构对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-2-%E8%BF%81%E7%A7%BB%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.15.2.</span> <span class="toc-text">13.2 迁移步骤</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E5%AE%89%E5%85%A8%E4%B8%8E%E9%A3%8E%E6%8E%A7%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.16.</span> <span class="toc-text">14. 安全与风控注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#14-1-QQ-%E8%B4%A6%E5%8F%B7%E9%A3%8E%E6%8E%A7"><span class="toc-number">1.16.1.</span> <span class="toc-text">14.1 QQ 账号风控</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-2-API-Key-%E5%AE%89%E5%85%A8"><span class="toc-number">1.16.2.</span> <span class="toc-text">14.2 API Key 安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-3-accessToken-%E5%AE%89%E5%85%A8"><span class="toc-number">1.16.3.</span> <span class="toc-text">14.3 accessToken 安全</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#15-%E6%87%92%E4%BA%BA%E9%80%9A%E9%81%93%EF%BC%9A%E8%AE%A9-AI-%E5%B8%AE%E4%BD%A0%E6%90%AD%EF%BC%88%E7%AC%91%EF%BC%89"><span class="toc-number">1.17.</span> <span class="toc-text">15. 懒人通道：让 AI 帮你搭（笑）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#15-1-%E6%A0%B8%E5%BF%83%E6%80%9D%E8%B7%AF"><span class="toc-number">1.17.1.</span> <span class="toc-text">15.1 核心思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-2-%E7%94%A8-WorkBuddy-Claude-Code-%E4%B8%80%E9%94%AE%E6%90%AD%E5%BB%BA"><span class="toc-number">1.17.2.</span> <span class="toc-text">15.2 用 WorkBuddy &#x2F; Claude Code 一键搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-3-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%99%E4%B8%AA%E6%96%B9%E6%B3%95%E5%8F%AF%E8%A1%8C%EF%BC%9F"><span class="toc-number">1.17.3.</span> <span class="toc-text">15.3 为什么这个方法可行？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-4-%E8%BF%9B%E9%98%B6%EF%BC%9A%E6%8A%8A%E6%95%99%E7%A8%8B%E5%81%9A%E6%88%90-WorkBuddy-Skill"><span class="toc-number">1.17.4.</span> <span class="toc-text">15.4 进阶：把教程做成 WorkBuddy Skill</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-5-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.17.5.</span> <span class="toc-text">15.5 注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.18.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.19.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/07/04/QQ%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%90%AD%E5%BB%BA%E6%95%99%E7%A8%8B-OpenClaw-NapCat/" title="QQ机器人搭建教程_OpenClaw_NapCat">QQ机器人搭建教程_OpenClaw_NapCat</a><time datetime="2026-07-04T04:28:48.000Z" title="发表于 2026-07-04 12:28:48">2026-07-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/24/%E4%B8%A4%E4%B8%AA%E5%B0%8F%E6%B5%8B%E8%AF%95%E7%BD%91%E5%9D%80/" title="两个小测试网址 日记day3">两个小测试网址 日记day3</a><time datetime="2026-05-24T09:22:33.000Z" title="发表于 2026-05-24 17:22:33">2026-05-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/05/03/%E6%88%91%E9%9C%80%E8%A6%81%E6%81%8B%E7%88%B1/" title="我需要恋爱 日记day2">我需要恋爱 日记day2</a><time datetime="2026-05-02T16:11:09.000Z" title="发表于 2026-05-03 00:11:09">2026-05-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/13/%E6%97%A5%E8%AE%B0day1/" title="日记day1">日记day1</a><time datetime="2026-04-13T13:39:32.000Z" title="发表于 2026-04-13 21:39:32">2026-04-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/12/%E6%B5%8B%E8%AF%952/" title="DAYDREAMER">DAYDREAMER</a><time datetime="2026-04-12T13:01:36.000Z" title="发表于 2026-04-12 21:01:36">2026-04-12</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://img.cdn1.vip/i/69db87c25db3d_1775994818.webp);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By 739085</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.5-b1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div class="cursor cursor--large"></div><div class="cursor cursor--small"></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly@5.5.5-b1/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly@5.5.5-b1/source/js/main.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><div class="js-pjax"><script>(() => {
+  let initFn = window.walineFn || null
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const destroyWaline = ele => ele.destroy()
+
+  const initWaline = (Fn, el = document, path = window.location.pathname) => {
+    const waline = Fn({
+      el: el.querySelector('#waline-wrap'),
+      serverURL: 'https://waline-comment.vuejs.org',
+      pageview: true,
+      dark: 'html[data-theme="dark"]',
+      comment: true,
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    if (isShuoshuo) {
+      window.shuoshuoComment.destroyWaline = () => {
+        destroyWaline(waline)
+        if (el.children.length) {
+          el.innerHTML = ''
+          el.classList.add('no-comment')
+        }
+      }
+    }
+  }
+
+  const loadWaline = (el, path) => {
+    if (initFn) initWaline(initFn, el, path)
+    else {
+      btf.getCSS('https://cdn.jsdelivr.net/npm/@waline/client@3.8.0/dist/waline.min.css')
+        .then(() => import('https://cdn.jsdelivr.net/npm/@waline/client@3.8.0/dist/waline.min.js'))
+        .then(({ init }) => {
+          initFn = init || Waline.init
+          initWaline(initFn, el, path)
+          window.walineFn = initFn
+        })
+    }
+  }
+
+  if (isShuoshuo) {
+    'Waline' === 'Waline'
+      ? window.shuoshuoComment = { loadComment: loadWaline } 
+      : window.loadOtherComment = loadWaline
+    return
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/click-heart.min.js" async="async" mobile="false"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly@5.5.5-b1/source/js/search/local-search.min.js"></script></div><!-- Waline 评论和浏览量修复脚本--><script src="/includes/third-party/waline-fix.js"></script><script>document.addEventListener('DOMContentLoaded', function() {
+  const cursorOuter = document.querySelector(".cursor--large");
+  let isStuck = false;
+  let mouse = {
+    x: -100,
+    y: -100,
+  };
+
+  let scrollHeight = 0;
+  window.addEventListener('scroll', function(e) {
+    scrollHeight = window.scrollY
+  });
+
+  let cursorOuterOriginalState = {
+    width: 50,
+    height: 50,
+  };
+
+  const interactiveElements = document.querySelectorAll("button, a, .nav-item, .card, .post-item");
+
+  interactiveElements.forEach((element) => {
+    element.addEventListener("pointerenter", handleMouseEnter);
+    element.addEventListener("pointerleave", handleMouseLeave);
+  });
+
+  document.body.addEventListener("pointermove", updateCursorPosition);
+
+  function updateCursorPosition(e) {
+    mouse.x = e.pageX;
+    mouse.y = e.pageY;
+  }
+
+  function updateCursor() {
+    if (!isStuck) {
+      cursorOuter.style.left = (mouse.x - cursorOuterOriginalState.width/2) + 'px';
+      cursorOuter.style.top = (mouse.y - cursorOuterOriginalState.height/2) + 'px';
+    }
+
+    requestAnimationFrame(updateCursor);
+  }
+
+  updateCursor();
+
+  function handleMouseEnter(e) {
+    isStuck = true;
+    const targetBox = e.currentTarget.getBoundingClientRect();
+    cursorOuter.style.left = targetBox.left + 'px';
+    cursorOuter.style.top = (targetBox.top + scrollHeight) + 'px';
+    cursorOuter.style.width = targetBox.width + 'px';
+    cursorOuter.style.height = targetBox.height + 'px';
+  }
+
+  function handleMouseLeave(e) {
+    isStuck = false;
+    cursorOuter.style.width = cursorOuterOriginalState.width + 'px';
+    cursorOuter.style.height = cursorOuterOriginalState.height + 'px';
+  }
+});</script></div></body></html>
