@@ -112,9 +112,11 @@
 
     var box = document.createElement('div')
     box.id = 'mascot'
-    var face = document.createElement('div')
+    var face = document.createElement('img')
     face.id = 'mascot-face'
-    face.textContent = '🐱'
+    face.src = '/images/mascot.webp'
+    face.alt = '看板娘'
+    face.draggable = false
     face.setAttribute('role', 'button')
     face.setAttribute('aria-label', '看板娘小助手')
     face.setAttribute('title', '戳我一下～')

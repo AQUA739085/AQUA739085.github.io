@@ -448,37 +448,37 @@ hr {
 /* ================= 看板娘小吉祥物 ================= */
 #mascot {
   position: fixed;
-  left: 22px;
-  bottom: 22px;
+  left: 24px;
+  bottom: 20px;
   z-index: 80;
+  animation: mascot-enter 0.8s ease backwards;
 }
 
 #mascot-face {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
+  width: 132px;
+  height: auto;
+  display: block;
+  border-radius: 22px 22px 18px 18px;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 16px 42px rgba(80, 45, 110, 0.35);
   cursor: pointer;
   user-select: none;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(255, 143, 171, 0.5);
-  box-shadow: 0 8px 24px rgba(255, 92, 138, 0.35);
-  animation: mascot-breathe 3s ease-in-out infinite;
-  transition: transform 0.2s ease;
+  -webkit-user-drag: none;
+  animation: mascot-breathe 4s ease-in-out infinite;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transform-origin: bottom center;
 }
 
 #mascot-face:hover {
-  transform: scale(1.12) rotate(-6deg);
+  transform: scale(1.05) rotate(-2deg);
+  box-shadow: 0 22px 54px rgba(255, 92, 138, 0.45);
 }
 
 #mascot-bubble {
   position: absolute;
-  left: 66px;
-  bottom: 16px;
-  max-width: 230px;
+  left: 8px;
+  bottom: calc(100% + 14px);
+  max-width: 220px;
   padding: 10px 14px;
   font-size: 13px;
   line-height: 1.6;
@@ -488,7 +488,7 @@ hr {
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(31, 22, 56, 0.18);
   opacity: 0;
-  transform: translateX(-8px);
+  transform: translateY(-8px);
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
@@ -496,10 +496,11 @@ hr {
 #mascot-bubble::before {
   content: '';
   position: absolute;
-  left: -8px;
-  bottom: 18px;
-  border: 8px solid transparent;
-  border-right-color: rgba(255, 255, 255, 0.94);
+  left: 34px;
+  bottom: -10px;
+  border: 10px solid transparent;
+  border-top-color: rgba(255, 255, 255, 0.94);
+  border-bottom: none;
 }
 
 #mascot-bubble.show {
@@ -508,8 +509,8 @@ hr {
 }
 
 [data-theme='dark'] #mascot-face {
-  background: rgba(40, 30, 66, 0.88);
-  border-color: rgba(255, 143, 171, 0.45);
+  border-color: rgba(255, 143, 171, 0.55);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.5);
 }
 
 [data-theme='dark'] #mascot-bubble {
@@ -519,12 +520,17 @@ hr {
 }
 
 [data-theme='dark'] #mascot-bubble::before {
-  border-right-color: rgba(46, 35, 76, 0.96);
+  border-top-color: rgba(46, 35, 76, 0.96);
+}
+
+@keyframes mascot-enter {
+  from { opacity: 0; transform: translateY(34px); }
+  to   { opacity: 1; transform: none; }
 }
 
 @keyframes mascot-breathe {
   0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.06); }
+  50%      { transform: scale(1.05); }
 }
 
 /* ================= 细颗粒质感 ================= */
@@ -552,19 +558,17 @@ body::after {
   }
 
   #mascot {
-    left: 14px;
-    bottom: 14px;
+    left: 12px;
+    bottom: 12px;
   }
 
   #mascot-face {
-    width: 48px;
-    height: 48px;
-    font-size: 22px;
+    width: 92px;
   }
 
   #mascot-bubble {
-    left: 56px;
-    max-width: 190px;
+    left: 4px;
+    max-width: 170px;
   }
 }
 
