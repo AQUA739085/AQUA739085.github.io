@@ -166,6 +166,30 @@
     })
   }
 
+  /* ---------- 5.5 封面随机：每次刷新换一张 ---------- */
+  var coverPool = [
+  '/images/cover-sunset.webp',
+  '/images/cover-dusk.webp',
+  '/images/cover-night.webp',
+  '/images/cover-sky.webp',
+  '/images/cover-mist.webp',
+  '/images/hero-sakura.webp',
+  '/images/hero-city.webp',
+  '/images/cover-rose.webp',
+  '/images/cover-sand.webp',
+  '/images/cover-amber.webp',
+  '/images/cover-indigo.webp'
+  ]
+
+  function initCoverRandom() {
+    var imgs = document.querySelectorAll(
+      '.post_cover img, .thumbnail img, .article-sort-item-img img'
+    )
+    imgs.forEach(function (img) {
+      img.src = coverPool[Math.floor(Math.random() * coverPool.length)]
+    })
+  }
+
   /* ---------- 6. 离开 / 回到页面时的标题彩蛋 ---------- */
   var originTitle = document.title
   document.addEventListener('visibilitychange', function () {
@@ -188,4 +212,5 @@
   initSakura()
   initMascot()
   initHeroDeco()
+  initCoverRandom()
 })()
