@@ -43,19 +43,13 @@
 
 /* ================= 天空背景（日夜两套） ================= */
 #web_bg {
-  background:
-    radial-gradient(1100px 560px at 85% -8%, rgba(255, 143, 171, 0.38), transparent 60%),
-    radial-gradient(900px 520px at 8% 18%, rgba(147, 197, 253, 0.34), transparent 55%),
-    radial-gradient(700px 420px at 55% 112%, rgba(184, 167, 232, 0.28), transparent 60%),
-    linear-gradient(180deg, #fdeef5 0%, #f6e9f2 34%, #e9e4f6 68%, #dbe2f5 100%) !important;
+  background: url('https://img.cdn1.vip/i/69db87c25db3d_1775994818.webp') center / cover no-repeat fixed !important;
 }
 
 [data-theme='dark'] #web_bg {
   background:
-    radial-gradient(1000px 540px at 85% -8%, rgba(255, 92, 138, 0.22), transparent 60%),
-    radial-gradient(800px 500px at 8% 12%, rgba(99, 102, 241, 0.18), transparent 55%),
-    radial-gradient(700px 420px at 50% 112%, rgba(139, 92, 246, 0.16), transparent 60%),
-    linear-gradient(180deg, #100d1f 0%, #171228 40%, #201a38 100%) !important;
+    linear-gradient(rgba(18, 13, 35, 0.38), rgba(18, 13, 35, 0.48)),
+    url('https://img.cdn1.vip/i/69db87c25db3d_1775994818.webp') center / cover no-repeat fixed !important;
 }
 
 /* 星空画布（暗色模式可见，由 custom.js 生成） */
