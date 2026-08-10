@@ -1,0 +1,236 @@
+/* =====================================================
+   奇点博客 · 樱花二次元主题（自定义样式）
+   由 /css/custom.css 注入，想调配色改这里即可
+   ===================================================== */
+
+:root {
+  --sakura: #ff8fab;
+  --sakura-deep: #ff5c8a;
+  --sakura-soft: #ffd6e0;
+}
+
+/* ---- 背景：在原图上加一层樱花色纱，更简洁更温柔 ----
+   想换背景图，改下面 url() 里的地址即可 */
+#web_bg {
+  background:
+    linear-gradient(rgba(255, 247, 250, 0.52), rgba(255, 247, 250, 0.68)),
+    url('https://img.cdn1.vip/i/69db87c25db3d_1775994818.webp') center / cover no-repeat fixed !important;
+}
+
+[data-theme='dark'] #web_bg {
+  background:
+    linear-gradient(rgba(24, 16, 22, 0.72), rgba(24, 16, 22, 0.84)),
+    url('https://img.cdn1.vip/i/69db87c25db3d_1775994818.webp') center / cover no-repeat fixed !important;
+}
+
+/* ---- 站点标题：圆体 + 樱花渐变 ---- */
+#site-title {
+  font-family: 'ZCOOL KuaiLe', 'YouYuan', '幼圆', 'Microsoft YaHei', sans-serif;
+  background: linear-gradient(120deg, #ff5c8a, #ff8fab 55%, #ffc2d1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+}
+
+#site-subtitle {
+  font-family: 'ZCOOL KuaiLe', 'YouYuan', '幼圆', 'Microsoft YaHei', sans-serif;
+  letter-spacing: 1px;
+}
+
+/* 文章标题用圆体，增加二次元感 */
+.article-title,
+.post-title {
+  font-family: 'ZCOOL KuaiLe', 'YouYuan', '幼圆', 'Microsoft YaHei', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* ---- 卡片：更圆润、更轻盈 ---- */
+.card-widget,
+.recent-post-item {
+  border: 1px solid rgba(255, 143, 171, 0.18);
+  box-shadow: 0 6px 24px rgba(255, 143, 171, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card-widget:hover,
+.recent-post-item:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 92, 138, 0.35);
+  box-shadow: 0 12px 32px rgba(255, 92, 138, 0.16);
+}
+
+/* ---- 链接：温柔的粉色过渡 ---- */
+a {
+  transition: color 0.25s ease;
+}
+
+a:hover {
+  color: var(--sakura-deep);
+}
+
+/* ---- 选中文字 ---- */
+::selection {
+  background: var(--sakura-soft);
+  color: #7a3b4d;
+}
+
+/* ---- 滚动条：粉色小圆条 ---- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #ffb3c6, #ff8fab);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #ff8fab, #ff5c8a);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---- 文章内的分类 / 标签：粉色小胶囊 ---- */
+.article-meta__categories a,
+.article-meta__tags a {
+  color: var(--sakura-deep);
+  background: rgba(255, 143, 171, 0.12);
+  border-radius: 6px;
+  padding: 1px 7px;
+  margin-left: 2px;
+}
+
+/* ---- 标签云 / 分类列表 ---- */
+.tag-cloud-list a,
+.category-list a,
+#aside-content .card-tags a {
+  border-radius: 20px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+}
+
+.tag-cloud-list a:hover,
+.category-list a:hover,
+#aside-content .card-tags a:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(255, 92, 138, 0.22);
+}
+
+/* ---- 分页：圆圆的、粉粉的 ---- */
+.pagination .page-number,
+.pagination .extend {
+  border-radius: 50%;
+  min-width: 32px;
+  height: 32px;
+  line-height: 30px;
+  text-align: center;
+  transition: all 0.25s ease;
+}
+
+.pagination .page-number.current,
+.pagination a:hover {
+  background: var(--sakura);
+  color: #fff;
+}
+
+/* ---- 加载动画：粉色 ---- */
+.loading-word {
+  color: var(--sakura-deep);
+  font-family: 'ZCOOL KuaiLe', 'YouYuan', '幼圆', sans-serif;
+}
+
+.loading-left-bg,
+.loading-right-bg {
+  background: #fff7fa !important;
+}
+
+.spinner-box .configure-border-1 {
+  border-color: var(--sakura-soft);
+}
+
+.spinner-box .configure-border-2 {
+  border-color: var(--sakura);
+}
+
+/* ---- 引用块更柔和 ---- */
+#post blockquote,
+.page blockquote {
+  border-left-color: var(--sakura) !important;
+}
+
+/* ---- 页脚 ---- */
+.footer_custom_text {
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 1px;
+}
+
+#footer::before {
+  background: rgba(255, 92, 138, 0.18) !important;
+}
+
+/* ---- 404 ---- */
+.error-info .error_title {
+  color: var(--sakura-deep);
+}
+
+/* ---- 右下角按钮 ---- */
+#rightside > div > button,
+#rightside > div > a {
+  border-radius: 50%;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+#rightside > div > button:hover,
+#rightside > div > a:hover {
+  transform: rotate(-8deg) scale(1.1);
+}
+
+/* ---- 樱花花瓣（由 custom.js 生成） ---- */
+.sakura-petal {
+  position: fixed;
+  top: -6vh;
+  pointer-events: none;
+  z-index: 99;
+  opacity: 0.8;
+  background: linear-gradient(135deg, #ffd6e0, #ffb3c6);
+  border-radius: 70% 0 70% 0;
+  animation: sakura-fall linear infinite;
+  will-change: transform, left;
+}
+
+@keyframes sakura-fall {
+  0% {
+    transform: translate3d(0, -6vh, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(var(--sway, 40px), 108vh, 0) rotate(340deg);
+  }
+}
+
+/* ---- 鼠标星光 ---- */
+.cursor-spark {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  font-size: 14px;
+  color: var(--sakura-deep);
+  text-shadow: 0 0 6px rgba(255, 143, 171, 0.8);
+  animation: spark-up 0.7s ease-out forwards;
+}
+
+@keyframes spark-up {
+  to {
+    transform: translateY(-20px) scale(0.4);
+    opacity: 0;
+  }
+}
+
+/* ---- 移动端小优化 ---- */
+@media (max-width: 768px) {
+  #site-title {
+    font-size: 2.1em;
+  }
+}
