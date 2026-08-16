@@ -12,25 +12,45 @@ html {
   display: none !important;
 }
 
+/* Use a single fixed background image for the whole page */
+#web_bg {
+  background-attachment: fixed !important;
+  background-position: center !important;
+  background-size: cover !important;
+}
+
+#page-header {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+#page-header:not(.not-top-img):before {
+  display: none !important;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: rgba(20, 14, 38, 0.22);
+}
+
+#footer {
+  background: rgba(28, 22, 46, 0.72) !important;
+}
+
+.pagination-related .cover,
+.relatedPosts .cover {
+  display: none !important;
+}
+
 /* Homepage hero: compact profile-style header */
 body.home-linkpage #page-header.full_page {
   height: clamp(360px, 58vh, 520px) !important;
   min-height: 320px;
   background-attachment: scroll !important;
-}
-
-body.home-linkpage #page-header.full_page::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgba(20, 14, 38, 0.34) 0%,
-    rgba(20, 14, 38, 0.12) 48%,
-    rgba(20, 14, 38, 0.38) 100%
-  );
 }
 
 body.home-linkpage #page-header.full_page #site-info {
@@ -176,15 +196,6 @@ body.home-linkpage #footer .footer-other {
 }
 
 /* Dark mode */
-[data-theme='dark'] body.home-linkpage #page-header.full_page::after {
-  background: linear-gradient(
-    180deg,
-    rgba(8, 6, 20, 0.52) 0%,
-    rgba(8, 6, 20, 0.34) 48%,
-    rgba(8, 6, 20, 0.62) 100%
-  );
-}
-
 [data-theme='dark'] body.home-linkpage .recent-post-item {
   border-color: rgba(255, 255, 255, 0.12) !important;
   background: rgba(30, 26, 50, 0.82) !important;
