@@ -37,24 +37,23 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 	 */
 	src: {
 		// 桌面背景图片（支持单张或多张随机）
-		// desktop: "assets/images/DesktopWallpaper/d1.avif",
+		// 自定义壁纸，放在 public/assets/images/wallpapers/
 		desktop: [
-			"assets/images/DesktopWallpaper/d1.avif",
-			"assets/images/DesktopWallpaper/d2.avif",
-			"assets/images/DesktopWallpaper/d3.avif",
-			"assets/images/DesktopWallpaper/d4.avif",
-			"assets/images/DesktopWallpaper/d5.avif",
-			"assets/images/DesktopWallpaper/d6.avif",
+			"/assets/images/wallpapers/w1.jpg",
+			"/assets/images/wallpapers/w2.jpg",
+			"/assets/images/wallpapers/w3.jpg",
+			"/assets/images/wallpapers/w4.jpg",
+			"/assets/images/wallpapers/w5.jpg",
+			"/assets/images/wallpapers/w6.jpg",
 		],
 		// 移动背景图片（支持单张或多张随机）
-		// mobile: "assets/images/MobileWallpaper/m1.avif",
 		mobile: [
-			"assets/images/MobileWallpaper/m1.avif",
-			"assets/images/MobileWallpaper/m2.avif",
-			"assets/images/MobileWallpaper/m3.avif",
-			"assets/images/MobileWallpaper/m4.avif",
-			"assets/images/MobileWallpaper/m5.avif",
-			"assets/images/MobileWallpaper/m6.avif",
+			"/assets/images/wallpapers/w1.jpg",
+			"/assets/images/wallpapers/w2.jpg",
+			"/assets/images/wallpapers/w3.jpg",
+			"/assets/images/wallpapers/w4.jpg",
+			"/assets/images/wallpapers/w5.jpg",
+			"/assets/images/wallpapers/w6.jpg",
 		],
 		// 背景视频播放地址
 		// 支持单个视频路径（字符串）或多个视频循环（数组，参考上面壁纸配置）
@@ -100,37 +99,15 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 				pauseTime: 2000,
 			},
 			// 是否显示标题下方的链接图标
-			linksEnable: true,
+			linksEnable: false,
 			// 首页横幅标题下方的链接图标（可选，支持 showName 显示文字）
 			// 图标支持 Iconify 格式：fa7-brands:github、fa7-solid:envelope、mdi:rss 等
-			links: [
-				{
-					name: "GitHub",
-					icon: "fa7-brands:github",
-					url: "https://github.com/CuteLeaf/Firefly",
-					showName: true,
-				},
-				{
-					name: "Email",
-					icon: "fa7-solid:envelope",
-					url: "mailto:xiaye@msn.com",
-				},
-				{
-					name: "Sponsor",
-					icon: "material-symbols:favorite",
-					url: "https://blog.cuteleaf.cn/sponsor/",
-				},
-				{
-					name: "RSS",
-					icon: "fa7-solid:rss",
-					url: "/rss/",
-				},
-			],
+			links: [],
 		},
 		// 壁纸轮播配置，横幅壁纸和全屏壁纸共享，仅在配置多张图片时生效
 		carousel: {
 			// 是否启用壁纸轮播；关闭时保持每次刷新随机显示一张
-			enable: false,
+			enable: true,
 			// 轮播切换间隔（毫秒）
 			interval: 5000,
 			// 过渡效果: 'fade' 渐变 | 'zoom' 缩放 | 'slide' 滑动 | 'kenburns' 旋转木马
