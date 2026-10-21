@@ -39,9 +39,6 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		url: "#",
 		icon: "material-symbols:person",
 		children: [
-			// 相册
-			LinkPresets.Gallery,
-
 			// 书签导航
 			LinkPresets.Booknav,
 		],
@@ -67,21 +64,15 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		children: [
 			{
 				name: "GitHub",
-				url: "https://github.com/CuteLeaf/Firefly",
+				url: "https://github.com/AQUA739085",
 				external: true,
 				icon: "fa7-brands:github",
 			},
 			{
-				name: "Gitee",
-				url: "https://gitee.com/CuteLeaf/Firefly",
+				name: "本博客源码",
+				url: "https://github.com/AQUA739085/AQUA739085.github.io",
 				external: true,
-				icon: "fa7-brands:gitee",
-			},
-			{
-				name: "Firefly文档",
-				url: "https://docs-firefly.cuteleaf.cn",
-				external: true,
-				icon: "material-symbols:docs",
+				icon: "material-symbols:code",
 			},
 		],
 	});

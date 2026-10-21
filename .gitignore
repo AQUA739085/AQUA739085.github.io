@@ -1,3 +1,6 @@
+# 主题自带示例内容的临时备份（已移到仓库外）
+_sample-posts-backup/
+
 # build output
 dist/
 
