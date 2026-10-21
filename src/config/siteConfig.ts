@@ -22,7 +22,7 @@ const pages = resolvePageToggles({
 	// 项目展示页开关
 	projects: false,
 	// 相册页面开关
-	gallery: false,
+	gallery: true,
 	// 书签导航页面开关
 	booknav: true,
 	// 哔哩哔哩追番页面开关

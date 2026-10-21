@@ -41,6 +41,9 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 		children: [
 			// 书签导航
 			LinkPresets.Booknav,
+
+			// 相册
+			LinkPresets.Gallery,
 		],
 	});
 

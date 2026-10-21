@@ -2,7 +2,6 @@
 title: "QQ机器人搭建教程_OpenClaw_NapCat"
 published: 2026-07-04
 tags: ["QQ机器人", "OpenClaw", "NapCat", "教程"]
-category: "折腾记录"
 description: "作者：739085"
 ---
 

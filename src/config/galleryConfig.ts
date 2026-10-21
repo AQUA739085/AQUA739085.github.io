@@ -4,6 +4,14 @@ import type { GalleryConfig } from "@/types/galleryConfig";
 export const galleryConfig: GalleryConfig = {
 	// 相册列表
 	albums: [
+		{
+			id: "eva",
+			name: "EVA",
+			description: "",
+			location: "",
+			date: "2026-10-21",
+			tags: [],
+		},
 		// 支持jpg/png/webp/avif/gif格式
 		// id: 相册唯一标识符（用于目录命名和URL路径），比如设置：id: "firefly-2026", 对应 public/gallery/firefly-2026/目录
 		// cover: 手动指定封面图（可选，不填会把cover.*文件作为封面图，如果没有cover.*文件，则使用第一张图片作为封面图）

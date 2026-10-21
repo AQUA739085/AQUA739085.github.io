@@ -133,9 +133,15 @@ function renderRandomPosts() {
   function render(allPosts) {
     var emptyTemplate = document.getElementById('random-posts-empty');
     container.innerHTML = '';
+    // 文章总数太少时，相关推荐可能把候选全占完，此时降级：只排除当前文章，保证随机推荐永远有内容
     var candidates = allPosts.filter(function(p) {
       return !excludeSet[p.id] && !p.password;
     });
+    if (candidates.length === 0) {
+      candidates = allPosts.filter(function(p) {
+        return p.id !== currentId && !p.password;
+      });
+    }
 
     // Fisher-Yates shuffle
     for (var i = candidates.length - 1; i > 0; i--) {
