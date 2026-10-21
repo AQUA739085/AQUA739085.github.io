@@ -8,10 +8,10 @@
   "src:assets/images/avatar.webp": "938882887d719b866d",
   "public:gallery/eva/eva-rei-asuka.jpg": "614237af6b419b633f",
   "public:gallery/eva/eva-cast-white.jpg": "e1e0dfd9d7d6cbcace",
-  "src:assets/images/wallpapers/w6.jpg": "7270817a7d895b5f71",
-  "src:assets/images/wallpapers/w5.jpg": "7075ab766f8e9489b3",
-  "src:assets/images/wallpapers/w4.jpg": "4d4657614b6f63537e",
-  "src:assets/images/wallpapers/w3.jpg": "a88da59186a1c8a7bf",
-  "src:assets/images/wallpapers/w2.jpg": "6e6560887973897968",
-  "src:assets/images/wallpapers/w1.jpg": "d5d2dbd3d3ddd9d4df"
+  "public:assets/images/wallpapers/w6.jpg": "7270807a7d895b5f71",
+  "public:assets/images/wallpapers/w5.jpg": "7075ac766f8f9489b4",
+  "public:assets/images/wallpapers/w4.jpg": "4d4657614b6f63537f",
+  "public:assets/images/wallpapers/w3.jpg": "a88da59186a2c8a7bf",
+  "public:assets/images/wallpapers/w2.jpg": "6e6560897973897968",
+  "public:assets/images/wallpapers/w1.jpg": "d5d2dbd3d3ded9d4e0"
 }

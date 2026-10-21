@@ -65,7 +65,8 @@
   <tr><td>头像</td><td>profileConfig.ts</td><td><code>avatar</code>：把你的图放到 <code>src/assets/images/</code> 改文件名</td></tr>
   <tr><td>昵称 / 签名 / 社交链接</td><td>profileConfig.ts</td><td><code>name</code> <code>bio</code> <code>links[]</code></td></tr>
   <tr><td>导航菜单项</td><td>navBarConfig.ts</td><td><code>links[]</code>，用 <code>LinkPresets.xxx</code> 或自定义 url</td></tr>
-  <tr><td>首页壁纸（横幅/全屏/纯色）</td><td>backgroundWallpaper.ts</td><td>图片放 <code>src/assets/images/wallpapers/</code>（<b>不带</b>斜杠开头，构建时自动压缩转 WebP 多尺寸）。放 <code>public/</code> 则不会优化</td></tr>
+  <tr><td>首页壁纸（横幅/全屏/纯色）</td><td>backgroundWallpaper.ts</td><td>图片放 <code>public/assets/images/wallpapers/</code>，<b>路径必须以 <code>/</code> 开头</b> → 原图直出不重编码。
+    （清晰度优先：放 <code>src/</code> 会被构建二次压缩，PSNR 只有 37~41dB；换图只需覆盖同名文件）</td></tr>
   <tr><td>改了文章文件名 / slug</td><td>astro.config.mjs</td><td>在 <code>redirects</code> 里加一条旧路径 → 新路径，避免旧链接变 404</td></tr>
   <tr><td>侧边栏显示哪些组件</td><td>sidebarConfig.ts</td><td>各组件开关与顺序</td></tr>
   <tr><td>关掉某个页面</td><td>siteConfig.ts</td><td><code>pages</code> 里对应项改 <code>false</code>，导航会自动隐藏</td></tr>

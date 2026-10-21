@@ -37,23 +37,24 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 	 */
 	src: {
 		// 桌面背景图片（支持单张或多张随机）
-		// 自定义壁纸放在 src/assets/images/wallpapers/（不带斜杠开头 = 会被 Astro 自动压缩转 WebP）
+		// 壁纸放 public/assets/images/wallpapers/，路径以 / 开头 = 原图直出、不做任何重编码
+		// （这里是清晰度优先：宁可体积大，也不要二次压缩损失细节）
 		desktop: [
-			"assets/images/wallpapers/w1.jpg",
-			"assets/images/wallpapers/w2.jpg",
-			"assets/images/wallpapers/w3.jpg",
-			"assets/images/wallpapers/w4.jpg",
-			"assets/images/wallpapers/w5.jpg",
-			"assets/images/wallpapers/w6.jpg",
+			"/assets/images/wallpapers/w1.jpg",
+			"/assets/images/wallpapers/w2.jpg",
+			"/assets/images/wallpapers/w3.jpg",
+			"/assets/images/wallpapers/w4.jpg",
+			"/assets/images/wallpapers/w5.jpg",
+			"/assets/images/wallpapers/w6.jpg",
 		],
 		// 移动背景图片（支持单张或多张随机）
 		mobile: [
-			"assets/images/wallpapers/w1.jpg",
-			"assets/images/wallpapers/w2.jpg",
-			"assets/images/wallpapers/w3.jpg",
-			"assets/images/wallpapers/w4.jpg",
-			"assets/images/wallpapers/w5.jpg",
-			"assets/images/wallpapers/w6.jpg",
+			"/assets/images/wallpapers/w1.jpg",
+			"/assets/images/wallpapers/w2.jpg",
+			"/assets/images/wallpapers/w3.jpg",
+			"/assets/images/wallpapers/w4.jpg",
+			"/assets/images/wallpapers/w5.jpg",
+			"/assets/images/wallpapers/w6.jpg",
 		],
 		// 背景视频播放地址
 		// 支持单个视频路径（字符串）或多个视频循环（数组，参考上面壁纸配置）
