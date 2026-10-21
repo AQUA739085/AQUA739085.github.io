@@ -65,7 +65,8 @@
   <tr><td>头像</td><td>profileConfig.ts</td><td><code>avatar</code>：把你的图放到 <code>src/assets/images/</code> 改文件名</td></tr>
   <tr><td>昵称 / 签名 / 社交链接</td><td>profileConfig.ts</td><td><code>name</code> <code>bio</code> <code>links[]</code></td></tr>
   <tr><td>导航菜单项</td><td>navBarConfig.ts</td><td><code>links[]</code>，用 <code>LinkPresets.xxx</code> 或自定义 url</td></tr>
-  <tr><td>首页壁纸（横幅/全屏/纯色）</td><td>backgroundWallpaper.ts</td><td>模式与图片路径，图放 <code>public/</code></td></tr>
+  <tr><td>首页壁纸（横幅/全屏/纯色）</td><td>backgroundWallpaper.ts</td><td>图片放 <code>src/assets/images/wallpapers/</code>（<b>不带</b>斜杠开头，构建时自动压缩转 WebP 多尺寸）。放 <code>public/</code> 则不会优化</td></tr>
+  <tr><td>改了文章文件名 / slug</td><td>astro.config.mjs</td><td>在 <code>redirects</code> 里加一条旧路径 → 新路径，避免旧链接变 404</td></tr>
   <tr><td>侧边栏显示哪些组件</td><td>sidebarConfig.ts</td><td>各组件开关与顺序</td></tr>
   <tr><td>关掉某个页面</td><td>siteConfig.ts</td><td><code>pages</code> 里对应项改 <code>false</code>，导航会自动隐藏</td></tr>
   <tr><td>文章列表：列表还是网格</td><td>siteConfig.ts</td><td><code>postListLayout.defaultMode</code>（list / grid）</td></tr>
@@ -80,6 +81,9 @@
 <div class="w">改 <code>.ts</code> 配置文件时，字段名拼错会直接构建失败。不确定就先 <code>pnpm dev</code> 看终端报不报错，再推送。</div>
 
 <h2>三、写文章</h2>
+<div class="w g"><b>约定</b>（2026-10-21 统一）：每篇都写 <code>description</code>（50~120 字，会变成 og/Twitter 摘要）、
+<code>category</code> 从 <b>教程 / 日记 / 测试</b> 里选一个、<code>published</code> 用最早成稿的日期
+（正文里的"最后更新"不能早于它）。正文从 <code>##</code> 开始写，不要写 <code>#</code> 大标题——标题由模板渲染，写了会一页两个 H1。</div>
 <h3>方式一：用命令</h3>
 <pre>pnpm new-post        # 会在 src/content/posts/ 生成一个带 frontmatter 的新文件</pre>
 <h3>方式二：手动建 .md 文件</h3>

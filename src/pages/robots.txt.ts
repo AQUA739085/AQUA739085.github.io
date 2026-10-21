@@ -2,9 +2,9 @@ import type { APIRoute } from "astro";
 
 export const prerender = true;
 
+// 注意：不要屏蔽 /_astro/，否则搜索引擎抓不到 CSS/JS，会影响渲染后的页面索引
 const robotsTxt = `
 User-agent: *
-Disallow: /_astro/
 Disallow: /archive/?tag=
 Disallow: /archive/?category=
 Disallow: /archive/?uncategorized=

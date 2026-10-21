@@ -72,6 +72,12 @@ export default defineConfig({
 	base: "/",
 	trailingSlash: "always",
 
+	// 旧链接重定向：slug 改短后，之前发出去的中文长链接仍能跳到正确文章
+	redirects: {
+		"/posts/qq机器人搭建教程-openclaw-napcat/":
+			"/posts/qq-bot-openclaw-napcat/",
+	},
+
 	// 字体配置 - 只加载实际使用的字体，跳过未引用的以加快构建
 	fonts: (() => {
 		// 禁用字体功能时直接返回空数组，跳过 Astro Font API 集成
@@ -276,6 +282,10 @@ export default defineConfig({
 					return false;
 				}
 				if (pathname === "/sponsor/" && !siteConfig.pages.sponsor) {
+					return false;
+				}
+				// 项目页及其子页关闭都会软 404，不应进 sitemap
+				if (pathname.startsWith("/projects/") && !siteConfig.pages.projects) {
 					return false;
 				}
 				return true;
