@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Firefly 定制速查卡</title>
+<style>
+  :root{
+    --bg:#fbf9fd; --card:#fff; --ink:#2b2536; --ink2:#6b6380; --ink3:#9a93ab;
+    --line:#ebe6f2; --accent:#7c5cbf; --accent-soft:#f2ecfb;
+    --blue:#378ADD; --blue-soft:#e6f1fb; --green:#1D9E75; --green-soft:#e1f5ee;
+    --amber:#BA7517; --amber-soft:#faeeda; --red:#A32D2D; --red-soft:#fcebeb;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:30px 20px 70px;background:var(--bg);color:var(--ink);
+       font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;
+       font-size:14px;line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:920px;margin:0 auto}
+  h1{font-size:23px;font-weight:600;margin:0 0 6px}
+  .sub{color:var(--ink2);font-size:13px;margin-bottom:26px}
+  h2{font-size:16px;font-weight:600;margin:32px 0 10px;padding-left:11px;border-left:3px solid var(--accent)}
+  h3{font-size:14px;font-weight:600;margin:20px 0 8px}
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+        border-radius:12px;overflow:hidden;font-size:13px;margin-bottom:8px}
+  th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--accent-soft);font-weight:500;font-size:12px;color:var(--accent)}
+  tr:last-child td{border-bottom:none}
+  code{background:#f6f3fa;border:1px solid var(--line);border-radius:5px;padding:1px 5px;
+       font-family:ui-monospace,Consolas,monospace;font-size:12px;color:#4a3f66}
+  pre{background:#f6f3fa;border:1px solid var(--line);border-radius:9px;padding:11px 13px;margin:8px 0;
+      overflow-x:auto;font-family:ui-monospace,Consolas,monospace;font-size:12px;color:#4a3f66}
+  .w{font-size:13px;padding:10px 13px;border-radius:9px;background:var(--amber-soft);color:#6b4a08;margin:10px 0}
+  .w.g{background:var(--green-soft);color:#0f5132}
+  .w.r{background:var(--red-soft);color:var(--red)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+  .box .t{font-weight:500;margin-bottom:4px}
+  .box .d{font-size:13px;color:var(--ink2)}
+  .pick{color:var(--green);font-weight:500}
+  footer{margin-top:34px;font-size:12px;color:var(--ink3);border-top:1px solid var(--line);padding-top:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Firefly 定制速查卡</h1>
+<p class="sub">项目位置 <code>D:\FireflyBlog</code> · 所有配置都在 <code>src/config/</code> 下，改完保存，本地热更新，推送后自动部署</p>
+
+<h2>一、改东西之前：先分清三层</h2>
+<div class="grid">
+  <div class="box"><div class="t">① 配置文件层 <span class="pick">最安全</span></div>
+    <div class="d"><code>src/config/*.ts</code>，20 多个文件各管一摊。90% 的定制在这里完成，升级主题不会冲突。</div></div>
+  <div class="box"><div class="t">② 内容层</div>
+    <div class="d"><code>src/content/posts/</code>（文章）、<code>dynamic/</code>（动态）、<code>projects/</code>（项目）、<code>public/</code>（静态资源）</div></div>
+  <div class="box"><div class="t">③ 组件与样式层</div>
+    <div class="d"><code>src/components/*.astro</code> 改结构，<code>src/styles/</code> 改样式。动这里前先 commit 一次。</div></div>
+</div>
+
+<h2>二、想改什么 → 改哪个文件</h2>
+<table>
+  <tr><th style="width:30%">想改的东西</th><th style="width:30%">文件</th><th>字段</th></tr>
+  <tr><td>站名 / 副标题 / 网址</td><td>siteConfig.ts</td><td><code>title</code> <code>subtitle</code> <code>site_url</code></td></tr>
+  <tr><td>主题色（0~360 色相）</td><td>siteConfig.ts</td><td><code>themeColor.hue</code>（红0 青200 蓝绿250 粉345）</td></tr>
+  <tr><td>默认亮/暗/跟随系统</td><td>siteConfig.ts</td><td><code>themeColor.defaultMode</code></td></tr>
+  <tr><td>头像</td><td>profileConfig.ts</td><td><code>avatar</code>：把你的图放到 <code>src/assets/images/</code> 改文件名</td></tr>
+  <tr><td>昵称 / 签名 / 社交链接</td><td>profileConfig.ts</td><td><code>name</code> <code>bio</code> <code>links[]</code></td></tr>
+  <tr><td>导航菜单项</td><td>navBarConfig.ts</td><td><code>links[]</code>，用 <code>LinkPresets.xxx</code> 或自定义 url</td></tr>
+  <tr><td>首页壁纸（横幅/全屏/纯色）</td><td>backgroundWallpaper.ts</td><td>模式与图片路径，图放 <code>public/</code></td></tr>
+  <tr><td>侧边栏显示哪些组件</td><td>sidebarConfig.ts</td><td>各组件开关与顺序</td></tr>
+  <tr><td>关掉某个页面</td><td>siteConfig.ts</td><td><code>pages</code> 里对应项改 <code>false</code>，导航会自动隐藏</td></tr>
+  <tr><td>文章列表：列表还是网格</td><td>siteConfig.ts</td><td><code>postListLayout.defaultMode</code>（list / grid）</td></tr>
+  <tr><td>每页几篇</td><td>siteConfig.ts</td><td><code>pagination.postsPerPage</code></td></tr>
+  <tr><td>评论区</td><td>commentConfig.ts</td><td><code>type</code>（twikoo / waline / giscus 等）</td></tr>
+  <tr><td>友链</td><td>friendsConfig.ts</td><td>按示例加条目</td></tr>
+  <tr><td>相册（图库）</td><td>galleryConfig.ts</td><td>加一项 + 图片放 <code>public/gallery/&lt;id&gt;/</code></td></tr>
+  <tr><td>看板娘 / 音乐 / 打赏 / 公告</td><td>pioConfig.ts / musicConfig.ts / sponsorConfig.ts / announcementConfig.ts</td><td>各自开关与内容</td></tr>
+  <tr><td>樱花等特效</td><td>effectsConfig.ts</td><td>开关</td></tr>
+  <tr><td>字体</td><td>fontConfig.ts</td><td><code>enable:false</code>（当前状态，见下方说明）</td></tr>
+</table>
+<div class="w">改 <code>.ts</code> 配置文件时，字段名拼错会直接构建失败。不确定就先 <code>pnpm dev</code> 看终端报不报错，再推送。</div>
+
+<h2>三、写文章</h2>
+<h3>方式一：用命令</h3>
+<pre>pnpm new-post        # 会在 src/content/posts/ 生成一个带 frontmatter 的新文件</pre>
+<h3>方式二：手动建 .md 文件</h3>
+<pre>---
+title: "文章标题"
+published: 2026-10-21
+tags: ["日记", "折腾记录"]
+category: "折腾记录"
+description: "显示在列表页的摘要"
+image: ./images/cover.png     # 封面，可选
+pinned: false                  # 置顶
+draft: false                   # 草稿，true 则不发布
+---
+
+正文从这里开始</pre>
+<table>
+  <tr><th style="width:24%">字段</th><th style="width:16%">必填</th><th>说明</th></tr>
+  <tr><td><code>title</code></td><td>✅</td><td>标题</td></tr>
+  <tr><td><code>published</code></td><td>✅</td><td>日期，<code>YYYY-MM-DD</code></td></tr>
+  <tr><td><code>tags</code></td><td>可选</td><td><b>数组</b>：<code>tags: ["a","b"]</code></td></tr>
+  <tr><td><code>category</code></td><td>可选</td><td><b>单个字符串</b>，不是数组（和 hexo 不一样）</td></tr>
+  <tr><td><code>description</code></td><td>可选</td><td>列表页摘要</td></tr>
+  <tr><td><code>image</code></td><td>可选</td><td>封面图，<code>./</code> 开头为相对路径</td></tr>
+  <tr><td><code>pinned</code>/<code>draft</code></td><td>可选</td><td>置顶 / 草稿</td></tr>
+  <tr><td><code>series</code></td><td>可选</td><td>系列名，配合 <code>seriesOrder</code></td></tr>
+</table>
+
+<h2>四、图片怎么用（三种方式）</h2>
+<table>
+  <tr><th style="width:22%">方式</th><th style="width:16%">适合</th><th>做法</th></tr>
+  <tr><td class="pick">① 放本地目录<br>（推荐）</td><td>文章配图</td>
+    <td>图片放 <code>src/content/posts/images/</code>，正文写 <code>![说明](./images/xx.png)</code>。
+    Astro 构建时自动压缩、转 webp、生成缩略图。<b>不依赖任何外部 CDN，国内一定加载得出来。</b></td></tr>
+  <tr><td>② GitHub + jsDelivr<br>（图床）</td><td>头像、友链头像等需要外链的地方</td>
+    <td>见下方步骤。零成本，但国内偶尔抽风。</td></tr>
+  <tr><td>③ 相册页</td><td>照片墙</td>
+    <td>图片放 <code>public/gallery/&lt;相册id&gt;/</code>，然后在 <code>galleryConfig.ts</code> 里加一项描述。</td></tr>
+</table>
+
+<h3>jsDelivr 图床搭建步骤</h3>
+<pre>1. GitHub 网页右上角 + → New repository
+   名字：images    选 Public（必须公开）    勾 Add a README
+
+2. 上传图片（网页直接拖拽，或用 git）：
+   git clone https://github.com/AQUA739085/images.git
+   # 把图片放进仓库，然后：
+   git add -A && git commit -m "add images" && git push
+
+3. 引用（@main 是分支名，改成 @master 如果你的默认分支是 master）：
+   https://cdn.jsdelivr.net/gh/AQUA739085/images@main/图片名.png
+
+4. 文章里用：
+   ![说明](https://cdn.jsdelivr.net/gh/AQUA739085/images@main/图片名.png)</pre>
+<div class="w">jsDelivr 首次缓存要等几分钟才生效；改了同名图片不会立刻更新，建议在文件名里带版本，如 <code>cover-v2.png</code>。
+分支名要写对——新建仓库默认是 <code>main</code>，老仓库是 <code>master</code>。</div>
+
+<h2>五、发布流程</h2>
+<pre>cd D:\FireflyBlog
+pnpm dev                 # 本地预览 localhost:4321，改哪看哪
+git add -A
+git commit -m "说明这次改了什么"
+git push                 # 推完 GitHub Actions 自动构建，2~3 分钟后线上生效</pre>
+<div class="w g">线上地址 https://aqua739085.github.io &nbsp;·&nbsp; 旧站已备份在远端 <code>legacy-backup</code> 分支</div>
+
+<h2>六、已做的本地化改动（避免你重复找）</h2>
+<table>
+  <tr><th style="width:34%">改动</th><th>位置</th></tr>
+  <tr><td>站名 739085 / 副标题「奇点」</td><td>siteConfig.ts</td></tr>
+  <tr><td>site_url 指向 aqua739085.github.io</td><td>siteConfig.ts</td></tr>
+  <tr><td>建站起始日 2026-04-11</td><td>siteConfig.ts</td></tr>
+  <tr><td>关闭 OpenGraph 图生成（构建更快）</td><td>siteConfig.ts</td></tr>
+  <tr><td>昵称 739085、签名、GitHub 链接</td><td>profileConfig.ts</td></tr>
+  <tr><td><b>关闭在线字体下载</b></td><td>fontConfig.ts（<code>enable: false</code>）</td></tr>
+  <tr><td>6 篇 hexo 文章已迁移</td><td>src/content/posts/</td></tr>
+</table>
+<div class="w"><b>关于字体：</b>主题默认要从 jsDelivr / Google Fonts 下载 Zen Maru Gothic 圆体，国内网络下不到会直接构建失败，
+所以现在关着、用系统字体。GitHub Actions 在境外，那边构建其实<b>能</b>下载成功——如果你想要原版圆体，
+把 <code>enable</code> 改回 <code>true</code> 就行，代价是本地 <code>pnpm dev</code> 会报错（线上不受影响）。</div>
+
+<h2>七、还剩下的默认内容</h2>
+<table>
+  <tr><th style="width:30%">项目</th><th>怎么改</th></tr>
+  <tr><td>头像还是主题示例图</td><td>你的图覆盖 <code>src/assets/images/avatar.avif</code>（同名最简单）</td></tr>
+  <tr><td>首页壁纸是示例图</td><td>backgroundWallpaper.ts 换图，图放 <code>public/</code></td></tr>
+  <tr><td>相册里是流萤示例图</td><td>换掉 <code>public/gallery/firefly-2026/</code> 里的图，或删掉这项</td></tr>
+  <tr><td>友链 / 赞助 / 音乐 / 看板娘</td><td>对应 config 文件，不想要就关开关</td></tr>
+  <tr><td>"动态"页是空的</td><td><code>pnpm new-d</code> 写一条，或在 siteConfig 里 <code>pages.dynamic: false</code> 关掉</td></tr>
+</table>
+
+<footer>生成于 2026-10-21 · 针对 D:\FireflyBlog（Firefly 主题，Astro 7.3.2）</footer>
+</div>
+</body>
+</html>
