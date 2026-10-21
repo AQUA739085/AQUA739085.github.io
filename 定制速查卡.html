@@ -72,7 +72,7 @@
   <tr><td>每页几篇</td><td>siteConfig.ts</td><td><code>pagination.postsPerPage</code></td></tr>
   <tr><td>评论区</td><td>commentConfig.ts</td><td><code>type</code>（twikoo / waline / giscus 等）</td></tr>
   <tr><td>友链</td><td>friendsConfig.ts</td><td>按示例加条目</td></tr>
-  <tr><td>相册（图库）</td><td>galleryConfig.ts</td><td>加一项 + 图片放 <code>public/gallery/&lt;id&gt;/</code></td></tr>
+  <tr><td>相册（图库）</td><td>galleryConfig.ts</td><td>推荐用脚本：<code>pnpm new-album</code>（见第五节）</td></tr>
   <tr><td>看板娘 / 音乐 / 打赏 / 公告</td><td>pioConfig.ts / musicConfig.ts / sponsorConfig.ts / announcementConfig.ts</td><td>各自开关与内容</td></tr>
   <tr><td>樱花等特效</td><td>effectsConfig.ts</td><td>开关</td></tr>
   <tr><td>字体</td><td>fontConfig.ts</td><td><code>enable:false</code>（当前状态，见下方说明）</td></tr>
@@ -116,7 +116,7 @@ draft: false                   # 草稿，true 则不发布
   <tr><td>② GitHub + jsDelivr<br>（图床）</td><td>头像、友链头像等需要外链的地方</td>
     <td>见下方步骤。零成本，但国内偶尔抽风。</td></tr>
   <tr><td>③ 相册页</td><td>照片墙</td>
-    <td>图片放 <code>public/gallery/&lt;相册id&gt;/</code>，然后在 <code>galleryConfig.ts</code> 里加一项描述。</td></tr>
+    <td>一条命令搞定，见下面第五节。本质是把图片复制到 <code>public/gallery/&lt;相册id&gt;/</code> 再在配置里登记。</td></tr>
 </table>
 
 <h3>jsDelivr 图床搭建步骤</h3>
@@ -136,40 +136,90 @@ draft: false                   # 草稿，true 则不发布
 <div class="w">jsDelivr 首次缓存要等几分钟才生效；改了同名图片不会立刻更新，建议在文件名里带版本，如 <code>cover-v2.png</code>。
 分支名要写对——新建仓库默认是 <code>main</code>，老仓库是 <code>master</code>。</div>
 
-<h2>五、发布流程</h2>
+<h2>五、建相册：一条命令</h2>
+<pre>pnpm new-album &lt;相册id&gt; "&lt;相册名称&gt;" "&lt;图片目录&gt;" [日期]
+
+例：
+pnpm new-album trip-2026 "青岛之行" "D:\Pictures\qingdao"
+pnpm new-album trip-2026 "青岛之行" "D:\Pictures\qingdao" 2026-10-03</pre>
+<table>
+  <tr><th style="width:26%">参数</th><th style="width:16%">必填</th><th>说明</th></tr>
+  <tr><td><code>相册id</code></td><td>✅</td><td>只能用<b>小写英文、数字、连字符</b>，会同时成为目录名和网址。如 <code>trip-2026</code></td></tr>
+  <tr><td><code>相册名称</code></td><td>✅</td><td>中文随意，有空格要用引号包起来</td></tr>
+  <tr><td><code>图片目录</code></td><td>✅</td><td>本机任意文件夹，脚本会把里面的图复制走（不删原图）</td></tr>
+  <tr><td><code>日期</code></td><td>可选</td><td><code>YYYY-MM-DD</code>，不填用今天，用于排序和展示</td></tr>
+</table>
+<p>它会自动完成四件事：</p>
+<pre>1. 把 jpg/png/webp/avif/gif 复制到 public/gallery/&lt;id&gt;/
+2. 在 galleryConfig.ts 的 albums 里插一条
+3. 把 siteConfig.ts 的 pages.gallery 打开（原本是关的）
+4. 把「相册」加进导航栏「我的」菜单（已有则不重复加）</pre>
+<div class="w">目录里必须有图片才会执行；<code>&lt;id&gt;</code> 重名会报错防止覆盖。超过 20MB 会提醒你先压图。</div>
+<h3>封面图怎么指定</h3>
+<p>放一张名叫 <code>cover.xxx</code> 的图进相册目录即可；没有的话自动用第一张图。<br>
+也可以事后在 <code>galleryConfig.ts</code> 那一项里加 <code>cover: "xxx.jpg"</code>、补 <code>description</code> / <code>location</code> / <code>tags</code>，
+加 <code>password</code> 还能变成加密相册。</p>
+
+<h2>六、发布流程</h2>
 <pre>cd D:\FireflyBlog
 pnpm dev                 # 本地预览 localhost:4321，改哪看哪
 git add -A
 git commit -m "说明这次改了什么"
-git push                 # 推完 GitHub Actions 自动构建，2~3 分钟后线上生效</pre>
+git push                 # 推完 GitHub Actions 自动构建，2~3 分钟后线上生效
+
+# 只想建相册时：
+pnpm new-album trip-2026 "青岛之行" "D:\Pictures\qingdao"
+pnpm dev                 # 看一眼效果
+git add -A && git commit -m "album: 青岛之行" && git push</pre>
 <div class="w g">线上地址 https://aqua739085.github.io &nbsp;·&nbsp; 旧站已备份在远端 <code>legacy-backup</code> 分支</div>
 
-<h2>六、已做的本地化改动（避免你重复找）</h2>
+<h2>七、已做的本地化改动（避免你重复找）</h2>
 <table>
   <tr><th style="width:34%">改动</th><th>位置</th></tr>
   <tr><td>站名 739085 / 副标题「奇点」</td><td>siteConfig.ts</td></tr>
   <tr><td>site_url 指向 aqua739085.github.io</td><td>siteConfig.ts</td></tr>
   <tr><td>建站起始日 2026-04-11</td><td>siteConfig.ts</td></tr>
   <tr><td>关闭 OpenGraph 图生成（构建更快）</td><td>siteConfig.ts</td></tr>
-  <tr><td>昵称 739085、签名、GitHub 链接</td><td>profileConfig.ts</td></tr>
+  <tr><td>关闭 系列/友链/留言/项目/动态/打赏 六个页面</td><td>siteConfig.ts → <code>pages</code></td></tr>
+  <tr><td>关闭 哔哩哔哩/番组计划/VNDB/AnimeList 四个页面</td><td>siteConfig.ts → <code>pages</code></td></tr>
+  <tr><td>昵称 739085、GitHub 与本博客源码链接</td><td>profileConfig.ts / navBarConfig.ts</td></tr>
   <tr><td><b>关闭在线字体下载</b></td><td>fontConfig.ts（<code>enable: false</code>）</td></tr>
   <tr><td>6 篇 hexo 文章已迁移</td><td>src/content/posts/</td></tr>
+  <tr><td>头像换成绫波丽</td><td>src/assets/images/avatar.webp</td></tr>
+  <tr><td>6 张自定义壁纸轮播（淡入每 5 秒）</td><td>backgroundWallpaper.ts + public/assets/images/wallpapers/</td></tr>
+  <tr><td>横幅主标题改为 <b>HELLO WORLD</b>，副标题打字机</td><td>backgroundWallpaper.ts → <code>common.homeText</code></td></tr>
+  <tr><td>删掉横幅下方 4 个图标按钮</td><td>backgroundWallpaper.ts → <code>homeText.linksEnable: false</code></td></tr>
+  <tr><td>公告文案「我不是笨蛋，真的」</td><td>announcementConfig.ts</td></tr>
+  <tr><td>关于页改为 <code>el psy kongroo</code></td><td>src/content/spec/about.md</td></tr>
+  <tr><td>清空示例相册、示例音乐（含 mp3）</td><td>galleryConfig.ts / musicConfig.ts，相册页已关闭待你建</td></tr>
+  <tr><td>书签导航换成你自己的项目与常用站点</td><td>booknavConfig.ts</td></tr>
+  <tr><td>删除主题示例项目文、示例友链页</td><td>src/content/projects/、spec/friends.mdx</td></tr>
+  <tr><td>新增相册创建脚本</td><td>scripts/new-album.js → <code>pnpm new-album</code></td></tr>
 </table>
 <div class="w"><b>关于字体：</b>主题默认要从 jsDelivr / Google Fonts 下载 Zen Maru Gothic 圆体，国内网络下不到会直接构建失败，
 所以现在关着、用系统字体。GitHub Actions 在境外，那边构建其实<b>能</b>下载成功——如果你想要原版圆体，
 把 <code>enable</code> 改回 <code>true</code> 就行，代价是本地 <code>pnpm dev</code> 会报错（线上不受影响）。</div>
+<div class="w g">主题自带的示例文档/样例装备份（壁纸、markdown 教程、示例相册图等）已移出仓库，
+放在 <code>C:\Users\陈天童\WorkBuddy\Claw\_archive\FireflyBlog-sample-backup\</code>，需要参考可以去那儿翻，想彻底删也随你。</div>
 
-<h2>七、还剩下的默认内容</h2>
+<h2>八、还剩下的默认内容</h2>
 <table>
-  <tr><th style="width:30%">项目</th><th>怎么改</th></tr>
-  <tr><td>头像还是主题示例图</td><td>你的图覆盖 <code>src/assets/images/avatar.avif</code>（同名最简单）</td></tr>
-  <tr><td>首页壁纸是示例图</td><td>backgroundWallpaper.ts 换图，图放 <code>public/</code></td></tr>
-  <tr><td>相册里是流萤示例图</td><td>换掉 <code>public/gallery/firefly-2026/</code> 里的图，或删掉这项</td></tr>
-  <tr><td>友链 / 赞助 / 音乐 / 看板娘</td><td>对应 config 文件，不想要就关开关</td></tr>
-  <tr><td>"动态"页是空的</td><td><code>pnpm new-d</code> 写一条，或在 siteConfig 里 <code>pages.dynamic: false</code> 关掉</td></tr>
+  <tr><th style="width:34%">项目</th><th>怎么改</th></tr>
+  <tr><td>页脚「Powered by Astro &amp; Firefly」</td>
+    <td><b>建议保留</b>，这是主题作者的署名，主题注释里明确请求不要删。真要改只能在 <code>Footer.astro</code> 里硬改，升级会冲突</td></tr>
+  <tr><td>侧边栏「博客版本 Firefly v1.x」</td>
+    <td><code>src/components/widget/SiteInfo.astro</code>，同上属于版本署名</td></tr>
+  <tr><td>RSS 里的 <code>&lt;templateThemeUrl&gt;</code></td>
+    <td><code>src/pages/rss.xml.ts</code>，订阅源里的主题出处标记，不影响阅读</td></tr>
+  <tr><td>导航栏 logo 还是火萤图标</td>
+    <td>siteConfig.ts → <code>navbar.logo</code>，或覆盖 <code>src/assets/images/logo/</code> 里的两 png</td></tr>
+  <tr><td>favicon 是火萤</td><td>覆盖 <code>public/favicon/</code> 下的图标</td></tr>
+  <tr><td>许可证 CC BY-NC-SA 4.0</td><td>licenseConfig.ts，想换就改</td></tr>
+  <tr><td>评论区还没开</td><td>commentConfig.ts 选 twikoo / waline / giscus 之一，需要自己部署后端</td></tr>
 </table>
+<div class="w g">除上面这些，<b>已经没有第三方作者的链接/示例内容了</b>：音乐、相册、书签、项目、友链、示例 md 全部清干净。</div>
 
-<footer>生成于 2026-10-21 · 针对 D:\FireflyBlog（Firefly 主题，Astro 7.3.2）</footer>
+<footer>更新于 2026-10-21 · 针对 D:\FireflyBlog（Firefly 主题，Astro 7.3.2）</footer>
 </div>
 </body>
 </html>
